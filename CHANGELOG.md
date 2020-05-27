@@ -4,15 +4,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.9.0] - Unreleased
+## [0.9.0] - 2020-05-27
 ### Added
-- [Preprocessing] Implement LabelEncoder
-- [Preprocessing] Implement ColumnFilter
-- [Preprocessing] Implement LambdaTransformer
-- [Preprocessing] Implement NumberConverter
-- [Preprocessing] Implement OneHotEncoder
-- [Workflow] Implement FeatureUnion
-- [Metric] Add Regression metrics: meanSquaredError, meanSquaredLogarithmicError, meanAbsoluteError, medianAbsoluteError, r2Score, maxError 
+- [Preprocessing] Implement LabelEncoder (#369)
+- [Preprocessing] Implement ColumnFilter (#378)
+- [Preprocessing] Implement LambdaTransformer (#381)
+- [Preprocessing] Implement NumberConverter (#377)
+- [Preprocessing] Implement OneHotEncoder (#384)
+- [Workflow] Implement FeatureUnion (#382)
+- [Metric] Add Regression metrics: meanSquaredError, meanSquaredLogarithmicError, meanAbsoluteError, medianAbsoluteError, r2Score, maxError (#373)
+- [Tokenization] Added NGramWordTokenizer (#370)
+- [Internal] Add php 7.4 for travis build (#393)
+- [FeatureExtraction] FeatureExtraction (#425)
+
+### Fixed
+- [Math] Fix division by zero in ANOVA for small size dataset (#391)
+- [Internal] Fix grammatical errors in code and docs (#410, #411, #413, #414)
+
+### Changed
+- [Internal] update phpunit to 8 (#367, #372)
+- [Internal] code style fixes (#366)
+- [Internal] update dependencies (#383, #415, #419, #426)
 
 ## [0.8.0] - 2019-03-20
 ### Added
