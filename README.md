@@ -87,8 +87,10 @@ Public datasets are available in a separate repository [php-ai/php-ml-datasets](
     * [Accuracy](http://php-ml.readthedocs.io/en/latest/machine-learning/metric/accuracy/)
     * [Confusion Matrix](http://php-ml.readthedocs.io/en/latest/machine-learning/metric/confusion-matrix/)
     * [Classification Report](http://php-ml.readthedocs.io/en/latest/machine-learning/metric/classification-report/)
+    * Regression
 * Workflow
     * [Pipeline](http://php-ml.readthedocs.io/en/latest/machine-learning/workflow/pipeline)
+    * FeatureUnion
 * Neural Network
     * [Multilayer Perceptron Classifier](http://php-ml.readthedocs.io/en/latest/machine-learning/neural-network/multilayer-perceptron-classifier/)
 * Cross Validation
@@ -101,6 +103,10 @@ Public datasets are available in a separate repository [php-ai/php-ml-datasets](
     * [Normalization](http://php-ml.readthedocs.io/en/latest/machine-learning/preprocessing/normalization/)
     * [Imputation missing values](http://php-ml.readthedocs.io/en/latest/machine-learning/preprocessing/imputation-missing-values/)
     * LabelEncoder
+    * LambdaTransformer
+    * NumberConverter
+    * ColumnFilter
+    * OneHotEncoder
 * Feature Extraction
     * [Token Count Vectorizer](http://php-ml.readthedocs.io/en/latest/machine-learning/feature-extraction/token-count-vectorizer/)
         * NGramTokenizer
