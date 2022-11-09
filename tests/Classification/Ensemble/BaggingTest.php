@@ -113,7 +113,7 @@ class BaggingTest extends TestCase
     {
         $classifier = new Bagging($numBaseClassifiers);
         $classifier->setSubsetRatio(1.0);
-        $classifier->setClassifer(DecisionTree::class, ['depth' => 10]);
+        $classifier->setClassifer(DecisionTree::class, ['maxDepth' => 10]);
 
         return $classifier;
     }
@@ -122,7 +122,7 @@ class BaggingTest extends TestCase
     {
         return [
             DecisionTree::class => [
-                'depth' => 5,
+                'maxDepth' => 5,
             ],
             NaiveBayes::class => [],
         ];

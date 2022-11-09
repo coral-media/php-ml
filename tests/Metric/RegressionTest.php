@@ -12,15 +12,15 @@ final class RegressionTest extends TestCase
 {
     public function testMeanSquaredError(): void
     {
-        self::assertEquals(6.08, Regression::meanSquaredError(
+        self::assertEqualsWithDelta(6.08, Regression::meanSquaredError(
             [41, 45, 49, 47, 44],
             [43.6, 44.4, 45.2, 46, 46.8]
-        ));
+        ), 0.000000000001);
 
-        self::assertEquals(0.375, Regression::meanSquaredError(
+        self::assertEqualsWithDelta(0.375, Regression::meanSquaredError(
             [3, -0.5, 2, 7],
             [2.5, 0.0, 2, 8]
-        ));
+        ), 0.000000000001);
     }
 
     public function testR2Score(): void

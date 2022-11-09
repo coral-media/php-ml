@@ -63,7 +63,7 @@ class RandomForestTest extends BaggingTest
     {
         return [
             DecisionTree::class => [
-                'depth' => 5,
+                'maxDepth' => 5,
             ],
         ];
     }
