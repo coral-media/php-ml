@@ -61,7 +61,7 @@ class DecisionStumpTest extends TestCase
         $classifier->train($samples, $targets);
         self::assertEquals(0, $classifier->predict([0.5, 0.5]));
         self::assertEquals(1, $classifier->predict([6.0, 5.0]));
-        self::assertEquals(2, $classifier->predict([3.5, 9.5]));
+        self::assertEquals(2, $classifier->predict([2.9, 9.5]));
     }
 
     public function testSaveAndRestore(): void

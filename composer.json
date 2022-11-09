@@ -11,7 +11,7 @@
         "data science",
         "feature extraction"
     ],
-    "homepage": "https://github.com/php-ai/php-ml",
+    "homepage": "https://gitlab.com/php-ai/php-ml",
     "license": "MIT",
     "authors": [
         {
@@ -20,15 +20,14 @@
         }
     ],
     "require": {
-        "php": "^7.2"
+        "php": "^8.0"
     },
     "require-dev": {
-        "phpbench/phpbench": "^0.16.0",
+        "phpbench/phpbench": "^1.2",
         "phpstan/phpstan-phpunit": "^0.12",
         "phpstan/phpstan": "^0.12",
         "phpstan/phpstan-strict-rules": "^0.12",
-        "phpunit/phpunit": "^8.0",
-        "symplify/easy-coding-standard": "^6.0"
+        "phpunit/phpunit": "^8.0"
     },
     "config": {
         "preferred-install": "dist",
@@ -47,6 +46,11 @@
     "scripts": {
         "check-cs": "vendor/bin/ecs check src tests bin",
         "fix-cs": "vendor/bin/ecs check src tests bin --fix",
-        "phpstan": "vendor/bin/phpstan.phar analyse src tests bin --level max --configuration phpstan.neon"
+        "phpstan": "vendor/bin/phpstan.phar analyse src tests bin --level max --configuration phpstan.neon",
+        "build": [
+            "@check-cs",
+            "@phpstan",
+            "phpunit"
+        ]
     }
 }

@@ -86,6 +86,6 @@ class SetTest extends TestCase
     {
         $set = new Set([1, 2, 2, 3, 'A', false, '', 1.1, -1, -10, 'B']);
 
-        self::assertEquals([-10, '', -1, 'A', 'B', 1, 1.1, 2, 3], $set->toArray());
+        self::assertEquals([false, -10, -1, 1, 1.1, 2, 3, 'A', 'B'], $set->toArray());
     }
 }

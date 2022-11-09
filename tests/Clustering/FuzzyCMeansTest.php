@@ -43,7 +43,7 @@ class FuzzyCMeansTest extends TestCase
         $matrix = array_map(...$matrix);
         // All column totals should be equal to 1 (100% membership)
         foreach ($matrix as $col) {
-            self::assertEquals(1, array_sum($col));
+            self::assertEqualsWithDelta(1, array_sum($col), 0.00000000001);
         }
     }
 

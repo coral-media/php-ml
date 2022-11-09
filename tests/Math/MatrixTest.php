@@ -50,7 +50,7 @@ class MatrixTest extends TestCase
             [4, 2, 1],
             [5, 6, 7],
         ]);
-        self::assertEquals(-3, $matrix->getDeterminant());
+        self::assertEqualsWithDelta(-3, $matrix->getDeterminant(), 0.0000000000001);
 
         $matrix = new Matrix([
             [1, 2, 3, 3, 2, 1],
@@ -60,7 +60,7 @@ class MatrixTest extends TestCase
             [1 / 4, 4, 1, 0, 2, 3 / 7],
             [1, 8, 7, 5, 4, 4 / 5],
         ]);
-        self::assertEqualsWithDelta(1116.5035, $matrix->getDeterminant(), $delta = 0.0001);
+        self::assertEqualsWithDelta(1116.5035, $matrix->getDeterminant(), 0.0001);
     }
 
     public function testMatrixTranspose(): void

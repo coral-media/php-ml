@@ -47,7 +47,7 @@ class EuclideanTest extends TestCase
         $expectedDistance = 2.2360679774998;
         $actualDistance = $this->distanceMetric->distance($a, $b);
 
-        self::assertEquals($expectedDistance, $actualDistance);
+        self::assertEqualsWithDelta($expectedDistance, $actualDistance, 0.000000000001);
     }
 
     public function testCalculateDistanceForThreeDimensions(): void
