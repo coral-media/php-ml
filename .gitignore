@@ -1,0 +1,8 @@
+/vendor/
+/build
+/tests/Performance/Data/*.csv
+.php_cs.cache
+.phpunit.result.cache
+
+.idea
+.DS_store
