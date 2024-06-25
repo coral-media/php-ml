@@ -15,7 +15,7 @@
 
 Fresh approach to Machine Learning in PHP. Algorithms, Cross Validation, Neural Network, Preprocessing, Feature Extraction and much more in one library.
 
-PHP-ML requires PHP >= 7.2.
+PHP-ML requires PHP `>= 8.0`. Use in any version `>= 7.2` under your own responsibility.
 
 Simple example of classification:
 ```php
@@ -44,11 +44,17 @@ To find out how to use PHP-ML follow [Documentation](http://php-ml.readthedocs.o
 
 ## Installation
 
-Currently this library is in the process of being developed, but You can install it with Composer:
+Currently, this library is in the process of being developed, but You can install it with Composer:
 
 ```
 composer require php-ai/php-ml
 ```
+
+## Docker support
+
+Current docker image [php:8.2-fpm-alpine](https://hub.docker.com/layers/library/php/8.2-fpm-alpine/images/sha256-64b70fc459f856eda9acdcd47b5eb0b884dae355968bd330f7fe0ee899c55491?context=explore)
+
+See **Docker** section in [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## Examples
 
