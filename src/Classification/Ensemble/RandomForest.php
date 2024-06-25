@@ -130,7 +130,7 @@ class RandomForest extends Bagging
     {
         if (!$classifier instanceof DecisionTree) {
             throw new InvalidArgumentException(
-                sprintf('Classifier %s expected, got %s', DecisionTree::class, get_class($classifier))
+                sprintf('Classifier %s expected, got %s', DecisionTree::class, $classifier::class)
             );
         }
 

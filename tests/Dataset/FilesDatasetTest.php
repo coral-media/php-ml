@@ -18,7 +18,7 @@ class FilesDatasetTest extends TestCase
 
     public function testLoadFilesDatasetWithBBCData(): void
     {
-        $rootPath = dirname(__FILE__).'/Resources/bbc';
+        $rootPath = __DIR__.'/Resources/bbc';
 
         $dataset = new FilesDataset($rootPath);
 
