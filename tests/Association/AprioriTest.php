@@ -272,7 +272,7 @@ class AprioriTest extends TestCase
      */
     private static function invoke(Apriori $object, string $method, array $params = [])
     {
-        $reflection = new ReflectionClass(get_class($object));
+        $reflection = new ReflectionClass($object::class);
         $method = $reflection->getMethod($method);
         $method->setAccessible(true);
 
