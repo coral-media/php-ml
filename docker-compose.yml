@@ -1,0 +1,11 @@
+services:
+    php:
+        platform: linux/x86_64
+        container_name: coral-media-php-ml
+        build:
+            context: .
+            dockerfile: ./docker/php-fpm/Dockerfile
+        volumes:
+            - .:/srv/app:rw,cached
+        ports:
+            - "9000:9000"
