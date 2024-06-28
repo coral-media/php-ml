@@ -2,7 +2,15 @@
 
 PHP-ML is an open source project. If you'd like to contribute, please read the following text. Before I can merge your 
 Pull-Request here are some guidelines that you need to follow. These guidelines exist not to annoy you, but to keep the 
-code base clean, unified and future proof.
+code base clean, unified and future-proof.
+
+## Docker
+
+We encourage contributors to use provided [Docker](https://www.docker.com/) config whenever possible.
+
+```bash
+docker-compose up -d
+```
 
 ## Branch
 
