@@ -4,10 +4,10 @@ includes:
     - vendor/phpstan/phpstan-phpunit/rules.neon
 
 parameters:
-    checkGenericClassInNonGenericObjectType: false
-    checkMissingIterableValueType: false
-
     ignoreErrors:
+        - identifier: missingType.iterableValue
+        - identifier: missingType.generics
+
         - '#Property Phpml\\Clustering\\KMeans\\Cluster\:\:\$points \(iterable\<Phpml\\Clustering\\KMeans\\Point\>\&SplObjectStorage\) does not accept SplObjectStorage#'
         - '#Phpml\\Dataset\\(.*)Dataset::__construct\(\) does not call parent constructor from Phpml\\Dataset\\ArrayDataset#'
         - '#Variable property access on .+#'
