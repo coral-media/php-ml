@@ -96,7 +96,7 @@ class Point implements ArrayAccess, \Countable
      *
      * @return mixed
      */
-    public function offsetGet($offset)
+    public function offsetGet(mixed $offset): mixed
     {
         return $this->coordinates[$offset];
     }
@@ -105,7 +105,7 @@ class Point implements ArrayAccess, \Countable
      * @param mixed $offset
      * @param mixed $value
      */
-    public function offsetSet($offset, $value): void
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         $this->coordinates[$offset] = $value;
     }
@@ -113,7 +113,7 @@ class Point implements ArrayAccess, \Countable
     /**
      * @param mixed $offset
      */
-    public function offsetUnset($offset): void
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->coordinates[$offset]);
     }

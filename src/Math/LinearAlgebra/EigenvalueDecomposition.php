@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Class to obtain eigenvalues and eigenvectors of a real matrix.
  *
- * If A is symmetric, then A = V*D*V' where the eigenvalue matrix D
+ * If A is symmetric, then A = `V*D*V'` where the eigenvalue matrix D
  * is diagonal and the eigenvector matrix V is orthogonal (i.e.
  * A = V.times(D.times(V.transpose())) and V.times(V.transpose())
  * equals the identity matrix).
@@ -557,7 +557,7 @@ class EigenvalueDecomposition
         $norm = 0.0;
 
         for ($i = 0; $i < $nn; ++$i) {
-            if (($i < $low) or ($i > $high)) {
+            if (($i > $high)) {
                 $this->d[$i] = $this->H[$i][$i];
                 $this->e[$i] = 0.0;
             }
@@ -815,18 +815,18 @@ class EigenvalueDecomposition
             return;
         }
 
-        for ($n = $nn - 1; $n >= 0; --$n) {
-            $p = $this->d[$n];
-            $q = $this->e[$n];
+        for ($ni = $nn - 1; $ni >= 0; --$ni) {
+            $p = $this->d[$ni];
+            $q = $this->e[$ni];
             // Real vector
             if ($q == 0) {
-                $l = $n;
-                $this->H[$n][$n] = 1.0;
-                for ($i = $n - 1; $i >= 0; --$i) {
+                $l = $ni;
+                $this->H[$ni][$ni] = 1.0;
+                for ($i = $ni - 1; $i >= 0; --$i) {
                     $w = $this->H[$i][$i] - $p;
                     $r = 0.0;
-                    for ($j = $l; $j <= $n; ++$j) {
-                        $r += $this->H[$i][$j] * $this->H[$j][$n];
+                    for ($j = $l; $j <= $ni; ++$j) {
+                        $r += $this->H[$i][$j] * $this->H[$j][$ni];
                     }
 
                     if ($this->e[$i] < 0.0) {
@@ -836,9 +836,9 @@ class EigenvalueDecomposition
                         $l = $i;
                         if ($this->e[$i] == 0.0) {
                             if ($w != 0.0) {
-                                $this->H[$i][$n] = -$r / $w;
+                                $this->H[$i][$ni] = -$r / $w;
                             } else {
-                                $this->H[$i][$n] = -$r / ($eps * $norm);
+                                $this->H[$i][$ni] = -$r / ($eps * $norm);
                             }
 
                             // Solve real equations
@@ -847,19 +847,19 @@ class EigenvalueDecomposition
                             $y = $this->H[$i + 1][$i];
                             $q = ($this->d[$i] - $p) * ($this->d[$i] - $p) + $this->e[$i] * $this->e[$i];
                             $t = ($x * $s - $z * $r) / $q;
-                            $this->H[$i][$n] = $t;
+                            $this->H[$i][$ni] = $t;
                             if (abs($x) > abs($z)) {
-                                $this->H[$i + 1][$n] = (-$r - $w * $t) / $x;
+                                $this->H[$i + 1][$ni] = (-$r - $w * $t) / $x;
                             } else {
-                                $this->H[$i + 1][$n] = (-$s - $y * $t) / $z;
+                                $this->H[$i + 1][$ni] = (-$s - $y * $t) / $z;
                             }
                         }
 
                         // Overflow control
-                        $t = abs($this->H[$i][$n]);
+                        $t = abs($this->H[$i][$ni]);
                         if (($eps * $t) * $t > 1) {
-                            for ($j = $i; $j <= $n; ++$j) {
-                                $this->H[$j][$n] /= $t;
+                            for ($j = $i; $j <= $ni; ++$j) {
+                                $this->H[$j][$ni] /= $t;
                             }
                         }
                     }
@@ -867,26 +867,26 @@ class EigenvalueDecomposition
 
                 // Complex vector
             } elseif ($q < 0) {
-                $l = $n - 1;
+                $l = $ni - 1;
                 // Last vector component imaginary so matrix is triangular
-                if (abs($this->H[$n][$n - 1]) > abs($this->H[$n - 1][$n])) {
-                    $this->H[$n - 1][$n - 1] = $q / $this->H[$n][$n - 1];
-                    $this->H[$n - 1][$n] = -($this->H[$n][$n] - $p) / $this->H[$n][$n - 1];
+                if (abs($this->H[$ni][$ni - 1]) > abs($this->H[$ni - 1][$ni])) {
+                    $this->H[$ni - 1][$ni - 1] = $q / $this->H[$ni][$ni - 1];
+                    $this->H[$ni - 1][$ni] = -($this->H[$ni][$ni] - $p) / $this->H[$ni][$ni - 1];
                 } else {
-                    $this->cdiv(0.0, -$this->H[$n - 1][$n], $this->H[$n - 1][$n - 1] - $p, $q);
-                    $this->H[$n - 1][$n - 1] = $this->cdivr;
-                    $this->H[$n - 1][$n] = $this->cdivi;
+                    $this->cdiv(0.0, -$this->H[$ni - 1][$ni], $this->H[$ni - 1][$ni - 1] - $p, $q);
+                    $this->H[$ni - 1][$ni - 1] = $this->cdivr;
+                    $this->H[$ni - 1][$ni] = $this->cdivi;
                 }
 
-                $this->H[$n][$n - 1] = 0.0;
-                $this->H[$n][$n] = 1.0;
-                for ($i = $n - 2; $i >= 0; --$i) {
+                $this->H[$ni][$ni - 1] = 0.0;
+                $this->H[$ni][$ni] = 1.0;
+                for ($i = $ni - 2; $i >= 0; --$i) {
                     // double ra,sa,vr,vi;
                     $ra = 0.0;
                     $sa = 0.0;
-                    for ($j = $l; $j <= $n; ++$j) {
-                        $ra += $this->H[$i][$j] * $this->H[$j][$n - 1];
-                        $sa += $this->H[$i][$j] * $this->H[$j][$n];
+                    for ($j = $l; $j <= $ni; ++$j) {
+                        $ra += $this->H[$i][$j] * $this->H[$j][$ni - 1];
+                        $sa += $this->H[$i][$j] * $this->H[$j][$ni];
                     }
 
                     $w = $this->H[$i][$i] - $p;
@@ -898,8 +898,8 @@ class EigenvalueDecomposition
                         $l = $i;
                         if ($this->e[$i] == 0) {
                             $this->cdiv(-$ra, -$sa, $w, $q);
-                            $this->H[$i][$n - 1] = $this->cdivr;
-                            $this->H[$i][$n] = $this->cdivi;
+                            $this->H[$i][$ni - 1] = $this->cdivr;
+                            $this->H[$i][$ni] = $this->cdivi;
                         } else {
                             // Solve complex equations
                             $x = $this->H[$i][$i + 1];
@@ -911,24 +911,24 @@ class EigenvalueDecomposition
                             }
 
                             $this->cdiv($x * $r - $z * $ra + $q * $sa, $x * $s - $z * $sa - $q * $ra, $vr, $vi);
-                            $this->H[$i][$n - 1] = $this->cdivr;
-                            $this->H[$i][$n] = $this->cdivi;
+                            $this->H[$i][$ni - 1] = $this->cdivr;
+                            $this->H[$i][$ni] = $this->cdivi;
                             if (abs($x) > (abs($z) + abs($q))) {
-                                $this->H[$i + 1][$n - 1] = (-$ra - $w * $this->H[$i][$n - 1] + $q * $this->H[$i][$n]) / $x;
-                                $this->H[$i + 1][$n] = (-$sa - $w * $this->H[$i][$n] - $q * $this->H[$i][$n - 1]) / $x;
+                                $this->H[$i + 1][$ni - 1] = (-$ra - $w * $this->H[$i][$ni - 1] + $q * $this->H[$i][$ni]) / $x;
+                                $this->H[$i + 1][$ni] = (-$sa - $w * $this->H[$i][$ni] - $q * $this->H[$i][$ni - 1]) / $x;
                             } else {
-                                $this->cdiv(-$r - $y * $this->H[$i][$n - 1], -$s - $y * $this->H[$i][$n], $z, $q);
-                                $this->H[$i + 1][$n - 1] = $this->cdivr;
-                                $this->H[$i + 1][$n] = $this->cdivi;
+                                $this->cdiv(-$r - $y * $this->H[$i][$ni - 1], -$s - $y * $this->H[$i][$ni], $z, $q);
+                                $this->H[$i + 1][$ni - 1] = $this->cdivr;
+                                $this->H[$i + 1][$ni] = $this->cdivi;
                             }
                         }
 
                         // Overflow control
-                        $t = max(abs($this->H[$i][$n - 1]), abs($this->H[$i][$n]));
+                        $t = max(abs($this->H[$i][$ni - 1]), abs($this->H[$i][$ni]));
                         if (($eps * $t) * $t > 1) {
-                            for ($j = $i; $j <= $n; ++$j) {
-                                $this->H[$j][$n - 1] /= $t;
-                                $this->H[$j][$n] /= $t;
+                            for ($j = $i; $j <= $ni; ++$j) {
+                                $this->H[$j][$ni - 1] /= $t;
+                                $this->H[$j][$ni] /= $t;
                             }
                         }
                     } // end else
@@ -938,7 +938,7 @@ class EigenvalueDecomposition
 
         // Vectors of isolated roots
         for ($i = 0; $i < $nn; ++$i) {
-            if ($i < $low || $i > $high) {
+            if ($i > $high) {
                 for ($j = $i; $j < $nn; ++$j) {
                     $this->V[$i][$j] = $this->H[$i][$j];
                 }

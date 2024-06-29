@@ -7,6 +7,7 @@ namespace Phpml\Clustering\KMeans;
 use IteratorAggregate;
 use LogicException;
 use SplObjectStorage;
+use Traversable;
 
 class Cluster extends Point implements IteratorAggregate
 {
@@ -97,10 +98,7 @@ class Cluster extends Point implements IteratorAggregate
         }
     }
 
-    /**
-     * @return Point[]|SplObjectStorage
-     */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return $this->points;
     }

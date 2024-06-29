@@ -62,7 +62,7 @@ class DataTransformer
         $predictions = explode(PHP_EOL, trim($rawPredictions));
 
         $header = array_shift($predictions);
-        $headerColumns = explode(' ', (string) $header);
+        $headerColumns = explode(' ', $header);
         array_shift($headerColumns);
 
         $columnLabels = [];
