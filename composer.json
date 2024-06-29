@@ -2,7 +2,7 @@
     "name": "coral-media/php-ml",
     "type": "library",
     "description": "PHP-ML - Machine Learning library for PHP",
-    "version": "0.10.1",
+    "version": "0.10.2",
     "keywords": [
         "machine learning",
         "pattern recognition",
