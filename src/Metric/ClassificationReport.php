@@ -54,6 +54,9 @@ class ClassificationReport
      */
     private $average = [];
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function __construct(array $actualLabels, array $predictedLabels, int $average = self::MACRO_AVERAGE)
     {
         $averagingMethods = range(self::MICRO_AVERAGE, self::WEIGHTED_AVERAGE);
@@ -118,7 +121,10 @@ class ClassificationReport
         foreach ($this->truePositive as $label => $tp) {
             $this->precision[$label] = $this->computePrecision($tp, $this->falsePositive[$label]);
             $this->recall[$label] = $this->computeRecall($tp, $this->falseNegative[$label]);
-            $this->f1score[$label] = $this->computeF1Score((float) $this->precision[$label], (float) $this->recall[$label]);
+            $this->f1score[$label] = $this->computeF1Score(
+                $this->precision[$label],
+                $this->recall[$label]
+            );
         }
     }
 
@@ -221,6 +227,6 @@ class ClassificationReport
         $labels = array_values(array_unique(array_merge($actualLabels, $predictedLabels)));
         sort($labels);
 
-        return (array) array_combine($labels, array_fill(0, count($labels), 0));
+        return array_combine($labels, array_fill(0, count($labels), 0));
     }
 }

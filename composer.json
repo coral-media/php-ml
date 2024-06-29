@@ -29,9 +29,9 @@
     },
     "require-dev": {
         "phpbench/phpbench": "^1.2",
-        "phpstan/phpstan-phpunit": "^0.12",
-        "phpstan/phpstan": "^0.12",
-        "phpstan/phpstan-strict-rules": "^0.12",
+        "phpstan/phpstan-phpunit": "^1.4.0",
+        "phpstan/phpstan": "^1.11.0",
+        "phpstan/phpstan-strict-rules": "^1.6.0",
         "phpunit/phpunit": "^8.0"
     },
     "config": {

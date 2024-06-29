@@ -292,7 +292,7 @@ class DecisionTree implements Classifier
     protected function getBestSplit(array $records): DecisionTreeLeaf
     {
         $targets = array_intersect_key($this->targets, array_flip($records));
-        $samples = (array) array_combine(
+        $samples = array_combine(
             $records,
             $this->preprocess(array_intersect_key($this->samples, array_flip($records)))
         );

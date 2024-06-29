@@ -20,6 +20,7 @@ final class ANOVA
      * @param array[] $samples - each row is class samples
      *
      * @return float[]
+     * @throws InvalidArgumentException
      */
     public static function oneWayF(array $samples): array
     {
@@ -31,7 +32,9 @@ final class ANOVA
         $samplesPerClass = array_map(static function (array $class): int {
             return count($class);
         }, $samples);
-        $allSamples = (int) array_sum($samplesPerClass);
+        $allSamples = (int) round(
+            array_sum($samplesPerClass), 0, PHP_ROUND_HALF_DOWN
+        );
         $ssAllSamples = self::sumOfSquaresPerFeature($samples);
         $sumSamples = self::sumOfFeaturesPerClass($samples);
         $squareSumSamples = self::sumOfSquares($sumSamples);
