@@ -2,7 +2,7 @@
     "name": "coral-media/php-ml",
     "type": "library",
     "description": "PHP-ML - Machine Learning library for PHP",
-    "version": "0.10.2",
+    "version": "0.10.3",
     "keywords": [
         "machine learning",
         "pattern recognition",
@@ -33,6 +33,9 @@
         "phpstan/phpstan": "^1.11.0",
         "phpstan/phpstan-strict-rules": "^1.6.0",
         "phpunit/phpunit": "^8.0"
+    },
+    "replace": {
+        "php-ai/php-ml": "0.*"
     },
     "config": {
         "preferred-install": "dist",
