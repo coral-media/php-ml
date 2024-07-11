@@ -13,7 +13,7 @@ final class ANOVAFValue implements ScoringFunction
     {
         $grouped = [];
         foreach ($samples as $index => $sample) {
-            $grouped[$targets[$index]][] = $sample;
+            $grouped[(string) $targets[$index]][] = $sample;
         }
 
         return ANOVA::oneWayF(array_values($grouped));
