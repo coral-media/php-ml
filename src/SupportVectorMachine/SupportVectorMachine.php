@@ -76,7 +76,7 @@ class SupportVectorMachine
     /**
      * @var string
      */
-    private $binPath;
+    private $javaClassPath;
 
     /**
      * @var string
@@ -121,17 +121,20 @@ class SupportVectorMachine
         $this->probabilityEstimates = $probabilityEstimates;
 
         $rootPath = realpath(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..'])).DIRECTORY_SEPARATOR;
-
-        $this->binPath = $rootPath.'bin'.DIRECTORY_SEPARATOR.'libsvm'.DIRECTORY_SEPARATOR;
+        $this->checkJavaRuntime();
+        $this->javaClassPath = $rootPath.'bin'.DIRECTORY_SEPARATOR.'libsvm' . DIRECTORY_SEPARATOR . 'libsvm.jar';
         $this->varPath = $rootPath.'var'.DIRECTORY_SEPARATOR;
     }
 
-    public function setBinPath(string $binPath): void
+    /**
+     * @throws InvalidArgumentException
+     */
+    public function setClassPath(string $classPath): void
     {
-        $this->ensureDirectorySeparator($binPath);
-        $this->verifyBinPath($binPath);
+        $this->ensureDirectorySeparator($classPath);
+        $this->verifyClassPath($classPath);
 
-        $this->binPath = $binPath;
+        $this->javaClassPath = $classPath;
     }
 
     public function setVarPath(string $varPath): void
@@ -254,24 +257,11 @@ class SupportVectorMachine
         return $predictions;
     }
 
-    private function getOSExtension(): string
-    {
-        $os = strtoupper(substr(PHP_OS, 0, 3));
-        if ($os === 'WIN') {
-            return '.exe';
-        } elseif ($os === 'DAR') {
-            return '-osx';
-        }
-
-        return '';
-    }
-
     private function buildTrainCommand(string $trainingSetFileName, string $modelFileName): string
     {
         return sprintf(
-            '%ssvm-train%s -s %s -t %s -c %s -n %F -d %s%s -r %s -p %F -m %F -e %F -h %d -b %d %s %s',
-            $this->binPath,
-            $this->getOSExtension(),
+            'java -classpath %s svm_train -s %s -t %s -c %s -n %F -d %s%s -r %s -p %F -m %F -e %F -h %d -b %d %s %s',
+            $this->javaClassPath,
             $this->type,
             $this->kernel,
             $this->cost,
@@ -296,9 +286,8 @@ class SupportVectorMachine
         bool $probabilityEstimates
     ): string {
         return sprintf(
-            '%ssvm-predict%s -b %d %s %s %s',
-            $this->binPath,
-            $this->getOSExtension(),
+            'java -classpath %s svm_predict -b %d %s %s %s',
+            $this->javaClassPath,
             $probabilityEstimates ? 1 : 0,
             escapeshellarg($testSetFileName),
             escapeshellarg($modelFileName),
@@ -313,22 +302,38 @@ class SupportVectorMachine
         }
     }
 
-    private function verifyBinPath(string $path): void
+    /**
+     * @throws InvalidArgumentException
+     */
+    private function verifyClassPath(string $path): void
     {
         if (!is_dir($path)) {
-            throw new InvalidArgumentException(sprintf('The specified path "%s" does not exist', $path));
+            throw new InvalidArgumentException(
+                sprintf('The specified path "%s" does not exist', $path)
+            );
         }
 
-        $osExtension = $this->getOSExtension();
-        foreach (['svm-predict', 'svm-scale', 'svm-train'] as $filename) {
-            $filePath = $path.$filename.$osExtension;
-            if (!file_exists($filePath)) {
-                throw new InvalidArgumentException(sprintf('File "%s" not found', $filePath));
-            }
+        if (!file_exists($path . 'libsvm.jar')) {
+            throw new InvalidArgumentException(
+                sprintf('File "%s" not found', $path . 'libsvm.jar')
+            );
+        }
+    }
 
-            if (!is_executable($filePath)) {
-                throw new InvalidArgumentException(sprintf('File "%s" is not executable', $filePath));
+    /**
+     * @throws InvalidArgumentException
+     */
+    private function checkJavaRuntime(): void
+    {
+        $paths = explode(PATH_SEPARATOR, getenv("PATH"));
+        $checked = [];
+        foreach ($paths as $path) {
+            if (is_executable($path . DIRECTORY_SEPARATOR . 'java')) {
+                $checked[] = 1;
             }
+        }
+        if (array_sum($checked) < 1) {
+            throw new InvalidArgumentException(sprintf('Java command is not available in $PATH="%s"', getenv('PATH')));
         }
     }
 }

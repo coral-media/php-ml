@@ -59,7 +59,7 @@ class DataTransformer
     {
         $numericLabels = self::numericLabels($labels);
 
-        $predictions = explode(PHP_EOL, trim($rawPredictions));
+        $predictions = explode(PHP_EOL, $rawPredictions);
 
         $header = array_shift($predictions);
         $headerColumns = explode(' ', $header);
@@ -72,6 +72,7 @@ class DataTransformer
 
         $results = [];
         foreach ($predictions as $rawResult) {
+            $rawResult = trim($rawResult);
             $probabilities = explode(' ', $rawResult);
             array_shift($probabilities);
 
