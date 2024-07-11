@@ -24,12 +24,12 @@ class SupportVectorMachineTest extends TestCase
 kernel_type linear
 nr_class 2
 total_sv 2
-rho 0
+rho 0.0
 label 0 1
 nr_sv 1 1
 SV
-0.25 1:2 2:4 
--0.25 1:4 2:2 
+0.25 1:2.0 2:4.0 
+-0.25 1:4.0 2:2.0 
 ';
 
         $svm = new SupportVectorMachine(Type::C_SVC, Kernel::LINEAR, 100.0);
@@ -152,12 +152,25 @@ SV
         $svm->setVarPath('var-path');
     }
 
-    public function testThrowExceptionWhenBinPathDoesNotExist(): void
+    public function testThrowExceptionWhenJavaClassPathDoesNotExist(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('does not exist');
         $svm = new SupportVectorMachine(Type::C_SVC, Kernel::RBF);
-        $svm->setBinPath('bin-path');
+        $svm->setClassPath('bin-path');
+    }
+
+    public function testThrowExceptionWhenJavaRuntimeNotInPath(): void
+    {
+        $path = getenv('PATH');
+        try {
+            putenv('PATH=bin-path');
+            $this->expectException(InvalidArgumentException::class);
+            $this->expectExceptionMessage('not available in');
+            new SupportVectorMachine(Type::C_SVC, Kernel::RBF);
+        } finally {
+            putenv(sprintf('PATH=%s', $path));
+        }
     }
 
     public function testThrowExceptionWhenFileIsNotFoundInBinPath(): void
@@ -165,7 +178,7 @@ SV
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('not found');
         $svm = new SupportVectorMachine(Type::C_SVC, Kernel::RBF);
-        $svm->setBinPath('var');
+        $svm->setClassPath('var');
     }
 
     public function testThrowExceptionWhenLibsvmFailsDuringTrain(): void
