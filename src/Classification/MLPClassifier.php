@@ -10,24 +10,17 @@ use Phpml\NeuralNetwork\Network\MultilayerPerceptron;
 class MLPClassifier extends MultilayerPerceptron implements Classifier
 {
     /**
-     * @param mixed $target
-     *
      * @throws InvalidArgumentException
      */
     public function getTargetClass($target): int
     {
         if (!in_array($target, $this->classes, true)) {
-            throw new InvalidArgumentException(
-                sprintf('Target with value "%s" is not part of the accepted classes', $target)
-            );
+            throw new InvalidArgumentException(sprintf('Target with value "%s" is not part of the accepted classes', $target));
         }
 
         return array_search($target, $this->classes, true);
     }
 
-    /**
-     * @return mixed
-     */
     protected function predictSample(array $sample)
     {
         $output = $this->setInput($sample)->getOutput();
@@ -44,9 +37,6 @@ class MLPClassifier extends MultilayerPerceptron implements Classifier
         return $predictedClass;
     }
 
-    /**
-     * @param mixed $target
-     */
     protected function trainSample(array $sample, $target): void
     {
         // Feed-forward.

@@ -67,7 +67,7 @@ abstract class MultilayerPerceptron extends LayeredNetwork implements Estimator,
         ?ActivationFunction $activationFunction = null,
         float $learningRate = 1.
     ) {
-        if (count($hiddenLayers) === 0) {
+        if (0 === count($hiddenLayers)) {
             throw new InvalidArgumentException('Provide at least 1 hidden layer');
         }
 
@@ -103,9 +103,7 @@ abstract class MultilayerPerceptron extends LayeredNetwork implements Estimator,
     {
         if (count($classes) > 0 && array_values($classes) !== $this->classes) {
             // We require the list of classes in the constructor.
-            throw new InvalidArgumentException(
-                'The provided classes don\'t match the classes provided in the constructor'
-            );
+            throw new InvalidArgumentException('The provided classes don\'t match the classes provided in the constructor');
         }
 
         for ($i = 0; $i < $this->iterations; ++$i) {
@@ -139,14 +137,8 @@ abstract class MultilayerPerceptron extends LayeredNetwork implements Estimator,
         return $this->backpropagation;
     }
 
-    /**
-     * @param mixed $target
-     */
     abstract protected function trainSample(array $sample, $target): void;
 
-    /**
-     * @return mixed
-     */
     abstract protected function predictSample(array $sample);
 
     protected function reset(): void

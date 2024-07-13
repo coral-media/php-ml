@@ -207,6 +207,6 @@ class SvmDatasetTest extends TestCase
 
     private static function getFilePath(string $baseName): string
     {
-        return __DIR__.'/Resources/svm/'.$baseName;
+        return __DIR__ . '/Resources/svm/' . $baseName;
     }
 }

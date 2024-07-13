@@ -14,7 +14,7 @@ class LeastSquaresTest extends TestCase
     {
         $delta = 0.01;
 
-        //https://www.easycalculation.com/analytical/learn-least-square-regression.php
+        // https://www.easycalculation.com/analytical/learn-least-square-regression.php
         $samples = [[60], [61], [62], [63], [65]];
         $targets = [3.1, 3.6, 3.8, 4, 4.1];
 
@@ -23,7 +23,7 @@ class LeastSquaresTest extends TestCase
 
         self::assertEqualsWithDelta(4.06, $regression->predict([64]), $delta);
 
-        //http://www.stat.wmich.edu/s216/book/node127.html
+        // http://www.stat.wmich.edu/s216/book/node127.html
         $samples = [[9300], [10565], [15000], [15000], [17764], [57000], [65940], [73676], [77006], [93739], [146088], [153260]];
         $targets = [7100, 15500, 4400, 4400, 5900, 4600, 8800, 2000, 2750, 2550,  960, 1025];
 
@@ -41,7 +41,7 @@ class LeastSquaresTest extends TestCase
     {
         $delta = 0.01;
 
-        //https://www.easycalculation.com/analytical/learn-least-square-regression.php
+        // https://www.easycalculation.com/analytical/learn-least-square-regression.php
         $samples = [[60], [61], [62], [63], [65]];
         $targets = [[3.1], [3.6], [3.8], [4], [4.1]];
 
@@ -55,7 +55,7 @@ class LeastSquaresTest extends TestCase
     {
         $delta = 0.01;
 
-        //http://www.stat.wmich.edu/s216/book/node129.html
+        // http://www.stat.wmich.edu/s216/book/node129.html
         $samples = [[73676, 1996], [77006, 1998], [10565, 2000], [146088, 1995], [15000, 2001], [65940, 2000], [9300, 2000], [93739, 1996], [153260, 1994], [17764, 2002], [57000, 1998], [15000, 2000]];
         $targets = [2000, 2750, 15500, 960, 4400, 8800, 7100, 2550, 1025, 5900, 4600, 4400];
 
@@ -70,18 +70,18 @@ class LeastSquaresTest extends TestCase
 
     public function testSaveAndRestore(): void
     {
-        //https://www.easycalculation.com/analytical/learn-least-square-regression.php
+        // https://www.easycalculation.com/analytical/learn-least-square-regression.php
         $samples = [[60], [61], [62], [63], [65]];
         $targets = [[3.1], [3.6], [3.8], [4], [4.1]];
 
         $regression = new LeastSquares();
         $regression->train($samples, $targets);
 
-        //http://www.stat.wmich.edu/s216/book/node127.html
+        // http://www.stat.wmich.edu/s216/book/node127.html
         $testSamples = [[9300], [10565], [15000]];
         $predicted = $regression->predict($testSamples);
 
-        $filename = 'least-squares-test-'.random_int(100, 999).'-'.uniqid('', false);
+        $filename = 'least-squares-test-' . random_int(100, 999) . '-' . uniqid('', false);
         $filepath = (string) tempnam(sys_get_temp_dir(), $filename);
         $modelManager = new ModelManager();
         $modelManager->saveToFile($regression, $filepath);

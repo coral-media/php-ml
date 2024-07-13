@@ -14,6 +14,7 @@ use Phpml\Regression\LeastSquares;
 
 /**
  * @BeforeMethods({"init"})
+ *
  * @OutputTimeUnit("seconds")
  */
 final class LeastSquaresBench
@@ -25,11 +26,12 @@ final class LeastSquaresBench
 
     public function init(): void
     {
-        $this->dataset = new CsvDataset(__DIR__.'/../Data/bike-sharing-hour.csv', 14);
+        $this->dataset = new CsvDataset(__DIR__ . '/../Data/bike-sharing-hour.csv', 14);
     }
 
     /**
      * @Revs(1)
+     *
      * @Iterations(5)
      */
     public function benchLeastSquaresTrain(): void

@@ -6,9 +6,6 @@ namespace Phpml\NeuralNetwork;
 
 interface Network
 {
-    /**
-     * @param mixed $input
-     */
     public function setInput($input): self;
 
     public function getOutput(): array;

@@ -120,10 +120,10 @@ class SupportVectorMachine
         $this->shrinking = $shrinking;
         $this->probabilityEstimates = $probabilityEstimates;
 
-        $rootPath = realpath(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..'])).DIRECTORY_SEPARATOR;
+        $rootPath = realpath(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..'])) . DIRECTORY_SEPARATOR;
         $this->checkJavaRuntime();
-        $this->javaClassPath = $rootPath.'bin'.DIRECTORY_SEPARATOR.'libsvm' . DIRECTORY_SEPARATOR . 'libsvm.jar';
-        $this->varPath = $rootPath.'var'.DIRECTORY_SEPARATOR;
+        $this->javaClassPath = $rootPath . 'bin' . DIRECTORY_SEPARATOR . 'libsvm' . DIRECTORY_SEPARATOR . 'libsvm.jar';
+        $this->varPath = $rootPath . 'var' . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -153,19 +153,17 @@ class SupportVectorMachine
         $this->targets = array_merge($this->targets, $targets);
 
         $trainingSet = DataTransformer::trainingSet($this->samples, $this->targets, in_array($this->type, [Type::EPSILON_SVR, Type::NU_SVR], true));
-        file_put_contents($trainingSetFileName = $this->varPath.uniqid('phpml', true), $trainingSet);
-        $modelFileName = $trainingSetFileName.'-model';
+        file_put_contents($trainingSetFileName = $this->varPath . uniqid('phpml', true), $trainingSet);
+        $modelFileName = $trainingSetFileName . '-model';
 
         $command = $this->buildTrainCommand($trainingSetFileName, $modelFileName);
         $output = [];
-        exec(escapeshellcmd($command).' 2>&1', $output, $return);
+        exec(escapeshellcmd($command) . ' 2>&1', $output, $return);
 
         unlink($trainingSetFileName);
 
-        if ($return !== 0) {
-            throw new LibsvmCommandException(
-                sprintf('Failed running libsvm command: "%s" with reason: "%s"', $command, array_pop($output))
-            );
+        if (0 !== $return) {
+            throw new LibsvmCommandException(sprintf('Failed running libsvm command: "%s" with reason: "%s"', $command, array_pop($output)));
         }
 
         $this->model = (string) file_get_contents($modelFileName);
@@ -229,9 +227,9 @@ class SupportVectorMachine
     private function runSvmPredict(array $samples, bool $probabilityEstimates): string
     {
         $testSet = DataTransformer::testSet($samples);
-        file_put_contents($testSetFileName = $this->varPath.uniqid('phpml', true), $testSet);
-        file_put_contents($modelFileName = $testSetFileName.'-model', $this->model);
-        $outputFileName = $testSetFileName.'-output';
+        file_put_contents($testSetFileName = $this->varPath . uniqid('phpml', true), $testSet);
+        file_put_contents($modelFileName = $testSetFileName . '-model', $this->model);
+        $outputFileName = $testSetFileName . '-output';
 
         $command = $this->buildPredictCommand(
             $testSetFileName,
@@ -240,7 +238,7 @@ class SupportVectorMachine
             $probabilityEstimates
         );
         $output = [];
-        exec(escapeshellcmd($command).' 2>&1', $output, $return);
+        exec(escapeshellcmd($command) . ' 2>&1', $output, $return);
 
         unlink($testSetFileName);
         unlink($modelFileName);
@@ -248,10 +246,8 @@ class SupportVectorMachine
 
         unlink($outputFileName);
 
-        if ($return !== 0) {
-            throw new LibsvmCommandException(
-                sprintf('Failed running libsvm command: "%s" with reason: "%s"', $command, array_pop($output))
-            );
+        if (0 !== $return) {
+            throw new LibsvmCommandException(sprintf('Failed running libsvm command: "%s" with reason: "%s"', $command, array_pop($output)));
         }
 
         return $predictions;
@@ -267,7 +263,7 @@ class SupportVectorMachine
             $this->cost,
             $this->nu,
             $this->degree,
-            $this->gamma !== null ? ' -g '.$this->gamma : '',
+            null !== $this->gamma ? ' -g ' . $this->gamma : '',
             $this->coef0,
             $this->epsilon,
             $this->cacheSize,
@@ -297,7 +293,7 @@ class SupportVectorMachine
 
     private function ensureDirectorySeparator(string &$path): void
     {
-        if (substr($path, -1) !== DIRECTORY_SEPARATOR) {
+        if (DIRECTORY_SEPARATOR !== substr($path, -1)) {
             $path .= DIRECTORY_SEPARATOR;
         }
     }
@@ -308,15 +304,11 @@ class SupportVectorMachine
     private function verifyClassPath(string $path): void
     {
         if (!is_dir($path)) {
-            throw new InvalidArgumentException(
-                sprintf('The specified path "%s" does not exist', $path)
-            );
+            throw new InvalidArgumentException(sprintf('The specified path "%s" does not exist', $path));
         }
 
         if (!file_exists($path . 'libsvm.jar')) {
-            throw new InvalidArgumentException(
-                sprintf('File "%s" not found', $path . 'libsvm.jar')
-            );
+            throw new InvalidArgumentException(sprintf('File "%s" not found', $path . 'libsvm.jar'));
         }
     }
 
@@ -325,7 +317,7 @@ class SupportVectorMachine
      */
     private function checkJavaRuntime(): void
     {
-        $paths = explode(PATH_SEPARATOR, getenv("PATH"));
+        $paths = explode(PATH_SEPARATOR, getenv('PATH'));
         $checked = [];
         foreach ($paths as $path) {
             if (is_executable($path . DIRECTORY_SEPARATOR . 'java')) {

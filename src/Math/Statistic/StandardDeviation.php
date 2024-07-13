@@ -14,11 +14,11 @@ class StandardDeviation
     public static function population(array $numbers, bool $sample = true): float
     {
         $n = count($numbers);
-        if ($n === 0) {
+        if (0 === $n) {
             throw new InvalidArgumentException('The array has zero elements');
         }
 
-        if ($sample && $n === 1) {
+        if ($sample && 1 === $n) {
             throw new InvalidArgumentException('The array must have at least 2 elements');
         }
 
@@ -37,13 +37,13 @@ class StandardDeviation
 
     /**
      * Sum of squares deviations
-     * ∑⟮xᵢ - μ⟯²
+     * ∑⟮xᵢ - μ⟯².
      *
      * @param float[]|int[] $numbers
      */
     public static function sumOfSquares(array $numbers): float
     {
-        if (count($numbers) === 0) {
+        if (0 === count($numbers)) {
             throw new InvalidArgumentException('The array has zero elements');
         }
 

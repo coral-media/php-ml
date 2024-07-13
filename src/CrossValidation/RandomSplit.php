@@ -19,8 +19,8 @@ class RandomSplit extends Split
             $key = mt_rand(0, $datasetSize - 1);
             $setName = (count($this->testSamples) - $testCount) / $datasetSize >= $testSize ? 'train' : 'test';
 
-            $this->{$setName.'Samples'}[] = $samples[$key];
-            $this->{$setName.'Labels'}[] = $labels[$key];
+            $this->{$setName . 'Samples'}[] = $samples[$key];
+            $this->{$setName . 'Labels'}[] = $labels[$key];
         }
     }
 }

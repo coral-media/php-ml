@@ -9,26 +9,26 @@ use Phpml\Exception\InvalidArgumentException;
 class Covariance
 {
     /**
-     * Calculates covariance from two given arrays, x and y, respectively
+     * Calculates covariance from two given arrays, x and y, respectively.
      *
      * @throws InvalidArgumentException
      */
     public static function fromXYArrays(array $x, array $y, bool $sample = true, ?float $meanX = null, ?float $meanY = null): float
     {
         $n = count($x);
-        if ($n === 0 || count($y) === 0) {
+        if (0 === $n || 0 === count($y)) {
             throw new InvalidArgumentException('The array has zero elements');
         }
 
-        if ($sample && $n === 1) {
+        if ($sample && 1 === $n) {
             throw new InvalidArgumentException('The array must have at least 2 elements');
         }
 
-        if ($meanX === null) {
+        if (null === $meanX) {
             $meanX = Mean::arithmetic($x);
         }
 
-        if ($meanY === null) {
+        if (null === $meanY) {
             $meanY = Mean::arithmetic($y);
         }
 
@@ -53,12 +53,12 @@ class Covariance
      */
     public static function fromDataset(array $data, int $i, int $k, bool $sample = true, ?float $meanX = null, ?float $meanY = null): float
     {
-        if (count($data) === 0) {
+        if (0 === count($data)) {
             throw new InvalidArgumentException('The array has zero elements');
         }
 
         $n = count($data);
-        if ($sample && $n === 1) {
+        if ($sample && 1 === $n) {
             throw new InvalidArgumentException('The array must have at least 2 elements');
         }
 
@@ -66,7 +66,7 @@ class Covariance
             throw new InvalidArgumentException('Given indices i and k do not match with the dimensionality of data');
         }
 
-        if ($meanX === null || $meanY === null) {
+        if (null === $meanX || null === $meanY) {
             $x = array_column($data, $i);
             $y = array_column($data, $k);
 
@@ -110,15 +110,13 @@ class Covariance
     }
 
     /**
-     * Returns the covariance matrix of n-dimensional data
-     *
-     * @param array|null $means
+     * Returns the covariance matrix of n-dimensional data.
      */
     public static function covarianceMatrix(array $data, ?array $means = null): array
     {
         $n = count($data[0]);
 
-        if ($means === null) {
+        if (null === $means) {
             $means = [];
             for ($i = 0; $i < $n; ++$i) {
                 $means[] = Mean::arithmetic(array_column($data, $i));

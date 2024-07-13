@@ -74,7 +74,7 @@ class DecisionStumpTest extends TestCase
         $testSamples = [[0, 1], [1, 1], [0.2, 0.1]];
         $predicted = $classifier->predict($testSamples);
 
-        $filename = 'dstump-test-'.random_int(100, 999).'-'.uniqid('', false);
+        $filename = 'dstump-test-' . random_int(100, 999) . '-' . uniqid('', false);
         $filepath = (string) tempnam(sys_get_temp_dir(), $filename);
         $modelManager = new ModelManager();
         $modelManager->saveToFile($classifier, $filepath);

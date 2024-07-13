@@ -28,7 +28,7 @@ final class ColumnFilter implements Preprocessor
 
     public function fit(array $samples, ?array $targets = null): void
     {
-        //nothing to do
+        // nothing to do
     }
 
     public function transform(array &$samples, ?array &$targets = null): void

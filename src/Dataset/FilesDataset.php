@@ -19,9 +19,9 @@ class FilesDataset extends ArrayDataset
 
     private function scanRootPath(string $rootPath): void
     {
-        $dirs = glob($rootPath.DIRECTORY_SEPARATOR.'*', GLOB_ONLYDIR);
+        $dirs = glob($rootPath . DIRECTORY_SEPARATOR . '*', GLOB_ONLYDIR);
 
-        if ($dirs === false) {
+        if (false === $dirs) {
             throw new DatasetException(sprintf('An error occurred during directory "%s" scan', $rootPath));
         }
 
@@ -34,8 +34,8 @@ class FilesDataset extends ArrayDataset
     {
         $target = basename($dir);
 
-        $files = glob($dir.DIRECTORY_SEPARATOR.'*');
-        if ($files === false) {
+        $files = glob($dir . DIRECTORY_SEPARATOR . '*');
+        if (false === $files) {
             return;
         }
 

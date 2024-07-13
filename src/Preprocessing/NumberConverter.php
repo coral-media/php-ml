@@ -11,14 +11,8 @@ final class NumberConverter implements Preprocessor
      */
     private $transformTargets;
 
-    /**
-     * @var mixed
-     */
     private $nonNumericPlaceholder;
 
-    /**
-     * @param mixed $nonNumericPlaceholder
-     */
     public function __construct(bool $transformTargets = false, $nonNumericPlaceholder = null)
     {
         $this->transformTargets = $transformTargets;
@@ -27,7 +21,7 @@ final class NumberConverter implements Preprocessor
 
     public function fit(array $samples, ?array $targets = null): void
     {
-        //nothing to do
+        // nothing to do
     }
 
     public function transform(array &$samples, ?array &$targets = null): void

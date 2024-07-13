@@ -11,9 +11,6 @@ use PHPUnit\Framework\TestCase;
 class ComparisonTest extends TestCase
 {
     /**
-     * @param mixed $a
-     * @param mixed $b
-     *
      * @dataProvider provideData
      */
     public function testResult($a, $b, string $operator, bool $expected): void

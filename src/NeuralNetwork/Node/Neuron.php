@@ -51,7 +51,7 @@ class Neuron implements Node
 
     public function getOutput(): float
     {
-        if ($this->output === 0.0) {
+        if (0.0 === $this->output) {
             $this->z = 0;
             foreach ($this->synapses as $synapse) {
                 $this->z += $synapse->getOutput();

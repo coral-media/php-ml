@@ -6,8 +6,5 @@ namespace Phpml\Preprocessing\Imputer;
 
 interface Strategy
 {
-    /**
-     * @return mixed
-     */
     public function replaceValue(array $currentAxis);
 }

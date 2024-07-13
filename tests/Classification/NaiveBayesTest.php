@@ -59,7 +59,7 @@ class NaiveBayesTest extends TestCase
         $classifier->train($trainSamples, $trainLabels);
         $predicted = $classifier->predict($testSamples);
 
-        $filename = 'naive-bayes-test-'.random_int(100, 999).'-'.uniqid('', false);
+        $filename = 'naive-bayes-test-' . random_int(100, 999) . '-' . uniqid('', false);
         $filepath = (string) tempnam(sys_get_temp_dir(), $filename);
         $modelManager = new ModelManager();
         $modelManager->saveToFile($classifier, $filepath);
@@ -117,7 +117,7 @@ class NaiveBayesTest extends TestCase
         $classifier->train($trainSamples, $trainLabels);
         $predicted = $classifier->predict($testSamples);
 
-        $filename = 'naive-bayes-test-'.random_int(100, 999).'-'.uniqid('', false);
+        $filename = 'naive-bayes-test-' . random_int(100, 999) . '-' . uniqid('', false);
         $filepath = (string) tempnam(sys_get_temp_dir(), $filename);
         $modelManager = new ModelManager();
         $modelManager->saveToFile($classifier, $filepath);

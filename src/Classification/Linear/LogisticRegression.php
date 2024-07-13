@@ -4,39 +4,37 @@ declare(strict_types=1);
 
 namespace Phpml\Classification\Linear;
 
-use Closure;
-use Exception;
 use Phpml\Exception\InvalidArgumentException;
 use Phpml\Helper\Optimizer\ConjugateGradient;
 
 class LogisticRegression extends Adaline
 {
     /**
-     * Batch training: Gradient descent algorithm (default)
+     * Batch training: Gradient descent algorithm (default).
      */
     public const BATCH_TRAINING = 1;
 
     /**
-     * Online training: Stochastic gradient descent learning
+     * Online training: Stochastic gradient descent learning.
      */
     public const ONLINE_TRAINING = 2;
 
     /**
-     * Conjugate Batch: Conjugate Gradient algorithm
+     * Conjugate Batch: Conjugate Gradient algorithm.
      */
     public const CONJUGATE_GRAD_TRAINING = 3;
 
     /**
      * Cost function to optimize: 'log' and 'sse' are supported <br>
      *  - 'log' : log likelihood <br>
-     *  - 'sse' : sum of squared errors <br>
+     *  - 'sse' : sum of squared errors <br>.
      *
      * @var string
      */
     protected $costFunction = 'log';
 
     /**
-     * Regularization term: only 'L2' is supported
+     * Regularization term: only 'L2' is supported.
      *
      * @var string
      */
@@ -52,7 +50,7 @@ class LogisticRegression extends Adaline
 
     /**
      * Initalize a Logistic Regression classifier with maximum number of iterations
-     * and learning rule to be applied <br>
+     * and learning rule to be applied <br>.
      *
      * Maximum number of iterations can be an integer value greater than 0 <br>
      * If normalizeInputs is set to true, then every input given to the algorithm will be standardized
@@ -73,21 +71,14 @@ class LogisticRegression extends Adaline
     ) {
         $trainingTypes = range(self::BATCH_TRAINING, self::CONJUGATE_GRAD_TRAINING);
         if (!in_array($trainingType, $trainingTypes, true)) {
-            throw new InvalidArgumentException(
-                'Logistic regression can only be trained with '.
-                'batch (gradient descent), online (stochastic gradient descent) '.
-                'or conjugate batch (conjugate gradients) algorithms'
-            );
+            throw new InvalidArgumentException('Logistic regression can only be trained with batch (gradient descent), online (stochastic gradient descent) or conjugate batch (conjugate gradients) algorithms');
         }
 
         if (!in_array($cost, ['log', 'sse'], true)) {
-            throw new InvalidArgumentException(
-                "Logistic regression cost function can be one of the following: \n".
-                "'log' for log-likelihood and 'sse' for sum of squared errors"
-            );
+            throw new InvalidArgumentException("Logistic regression cost function can be one of the following: \n'log' for log-likelihood and 'sse' for sum of squared errors");
         }
 
-        if ($penalty !== '' && strtoupper($penalty) !== 'L2') {
+        if ('' !== $penalty && 'L2' !== strtoupper($penalty)) {
             throw new InvalidArgumentException('Logistic regression supports only \'L2\' regularization');
         }
 
@@ -102,7 +93,7 @@ class LogisticRegression extends Adaline
 
     /**
      * Sets the learning rate if gradient descent algorithm is
-     * selected for training
+     * selected for training.
      */
     public function setLearningRate(float $learningRate): void
     {
@@ -111,7 +102,7 @@ class LogisticRegression extends Adaline
 
     /**
      * Lambda (λ) parameter of regularization term. If 0 is given,
-     * then the regularization term is cancelled
+     * then the regularization term is cancelled.
      */
     public function setLambda(float $lambda): void
     {
@@ -120,7 +111,7 @@ class LogisticRegression extends Adaline
 
     /**
      * Adapts the weights with respect to given samples and targets
-     * by use of selected solver
+     * by use of selected solver.
      *
      * @throws \Exception
      */
@@ -146,16 +137,16 @@ class LogisticRegression extends Adaline
 
             default:
                 // Not reached
-                throw new Exception(sprintf('Logistic regression has invalid training type: %d.', $this->trainingType));
+                throw new \Exception(sprintf('Logistic regression has invalid training type: %d.', $this->trainingType));
         }
     }
 
     /**
-     * Executes Conjugate Gradient method to optimize the weights of the LogReg model
+     * Executes Conjugate Gradient method to optimize the weights of the LogReg model.
      */
-    protected function runConjugateGradient(array $samples, array $targets, Closure $gradientFunc): void
+    protected function runConjugateGradient(array $samples, array $targets, \Closure $gradientFunc): void
     {
-        if ($this->optimizer === null) {
+        if (null === $this->optimizer) {
             $this->optimizer = (new ConjugateGradient($this->featureCount))
                 ->setMaxIterations($this->maxIterations);
         }
@@ -165,14 +156,14 @@ class LogisticRegression extends Adaline
     }
 
     /**
-     * Returns the appropriate callback function for the selected cost function
+     * Returns the appropriate callback function for the selected cost function.
      *
      * @throws \Exception
      */
-    protected function getCostFunction(): Closure
+    protected function getCostFunction(): \Closure
     {
         $penalty = 0;
-        if ($this->penalty === 'L2') {
+        if ('L2' === $this->penalty) {
             $penalty = $this->lambda;
         }
 
@@ -194,11 +185,11 @@ class LogisticRegression extends Adaline
 
                     // In cases where $hX = 1 or $hX = 0, the log-likelihood
                     // value will give a NaN, so we fix these values
-                    if ($hX == 1) {
+                    if (1 == $hX) {
                         $hX = 1 - 1e-10;
                     }
 
-                    if ($hX == 0) {
+                    if (0 == $hX) {
                         $hX = 1e-10;
                     }
 
@@ -233,12 +224,12 @@ class LogisticRegression extends Adaline
                 };
             default:
                 // Not reached
-                throw new Exception(sprintf('Logistic regression has invalid cost function: %s.', $this->costFunction));
+                throw new \Exception(sprintf('Logistic regression has invalid cost function: %s.', $this->costFunction));
         }
     }
 
     /**
-     * Returns the output of the network, a float value between 0.0 and 1.0
+     * Returns the output of the network, a float value between 0.0 and 1.0.
      */
     protected function output(array $sample): float
     {
@@ -248,7 +239,7 @@ class LogisticRegression extends Adaline
     }
 
     /**
-     * Returns the class value (either -1 or 1) for the given input
+     * Returns the class value (either -1 or 1) for the given input.
      */
     protected function outputClass(array $sample): int
     {
@@ -266,8 +257,6 @@ class LogisticRegression extends Adaline
      *
      * The probability is simply taken as the distance of the sample
      * to the decision plane.
-     *
-     * @param mixed $label
      */
     protected function predictProbability(array $sample, $label): float
     {

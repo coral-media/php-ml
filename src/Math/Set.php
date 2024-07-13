@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Phpml\Math;
 
-use ArrayIterator;
-use IteratorAggregate;
-
-class Set implements IteratorAggregate
+class Set implements \IteratorAggregate
 {
     /**
      * @var string[]|int[]|float[]|bool[]
@@ -131,7 +128,7 @@ class Set implements IteratorAggregate
      */
     public function containsAll(array $elements): bool
     {
-        return count(array_diff($elements, $this->elements)) === 0;
+        return 0 === count(array_diff($elements, $this->elements));
     }
 
     /**
@@ -142,14 +139,14 @@ class Set implements IteratorAggregate
         return $this->elements;
     }
 
-    public function getIterator(): ArrayIterator
+    public function getIterator(): \ArrayIterator
     {
-        return new ArrayIterator($this->elements);
+        return new \ArrayIterator($this->elements);
     }
 
     public function isEmpty(): bool
     {
-        return $this->cardinality() === 0;
+        return 0 === $this->cardinality();
     }
 
     public function cardinality(): int

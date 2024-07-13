@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Phpml\Helper\Optimizer;
 
-use Closure;
 use Phpml\Exception\InvalidArgumentException;
 use Phpml\Exception\InvalidOperationException;
 
@@ -16,14 +15,14 @@ use Phpml\Exception\InvalidOperationException;
 class StochasticGD extends Optimizer
 {
     /**
-     * A (samples)
+     * A (samples).
      *
      * @var array
      */
     protected $samples = [];
 
     /**
-     * y (targets)
+     * y (targets).
      *
      * @var array
      */
@@ -31,21 +30,21 @@ class StochasticGD extends Optimizer
 
     /**
      * Callback function to get the gradient and cost value
-     * for a specific set of theta (ϴ) and a pair of sample & target
+     * for a specific set of theta (ϴ) and a pair of sample & target.
      *
      * @var \Closure|null
      */
     protected $gradientCb;
 
     /**
-     * Maximum number of iterations used to train the model
+     * Maximum number of iterations used to train the model.
      *
      * @var int
      */
     protected $maxIterations = 1000;
 
     /**
-     * Learning rate is used to control the speed of the optimization.<br>
+     * Learning rate is used to control the speed of the optimization.<br>.
      *
      * Larger values of lr may overshoot the optimum or even cause divergence
      * while small values slows down the convergence and increases the time
@@ -57,7 +56,7 @@ class StochasticGD extends Optimizer
 
     /**
      * Minimum amount of change in the weights and error values
-     * between iterations that needs to be obtained to continue the training
+     * between iterations that needs to be obtained to continue the training.
      *
      * @var float
      */
@@ -65,7 +64,7 @@ class StochasticGD extends Optimizer
 
     /**
      * Enable/Disable early stopping by checking the weight & cost values
-     * to see whether they changed large enough to continue the optimization
+     * to see whether they changed large enough to continue the optimization.
      *
      * @var bool
      */
@@ -73,14 +72,14 @@ class StochasticGD extends Optimizer
 
     /**
      * List of values obtained by evaluating the cost function at each iteration
-     * of the algorithm
+     * of the algorithm.
      *
      * @var array
      */
     protected $costValues = [];
 
     /**
-     * Initializes the SGD optimizer for the given number of dimensions
+     * Initializes the SGD optimizer for the given number of dimensions.
      */
     public function __construct(int $dimensions)
     {
@@ -103,7 +102,7 @@ class StochasticGD extends Optimizer
 
     /**
      * Sets minimum value for the change in the theta values
-     * between iterations to continue the iterations.<br>
+     * between iterations to continue the iterations.<br>.
      *
      * If change in the theta is less than given value then the
      * algorithm will stop training
@@ -119,7 +118,7 @@ class StochasticGD extends Optimizer
 
     /**
      * Enable/Disable early stopping by checking at each iteration
-     * whether changes in theta or cost value are not large enough
+     * whether changes in theta or cost value are not large enough.
      *
      * @return $this
      */
@@ -152,12 +151,12 @@ class StochasticGD extends Optimizer
 
     /**
      * Optimization procedure finds the unknow variables for the equation A.ϴ = y
-     * for the given samples (A) and targets (y).<br>
+     * for the given samples (A) and targets (y).<br>.
      *
      * The cost function to minimize and the gradient of the function are to be
      * handled by the callback function provided as the third parameter of the method.
      */
-    public function runOptimization(array $samples, array $targets, Closure $gradientCb): array
+    public function runOptimization(array $samples, array $targets, \Closure $gradientCb): array
     {
         $this->samples = $samples;
         $this->targets = $targets;
@@ -176,7 +175,7 @@ class StochasticGD extends Optimizer
 
             // Save the best theta in the "pocket" so that
             // any future set of theta worse than this will be disregarded
-            if ($bestTheta === null || $cost <= $bestScore) {
+            if (null === $bestTheta || $cost <= $bestScore) {
                 $bestTheta = $theta;
                 $bestScore = $cost;
             }
@@ -199,7 +198,7 @@ class StochasticGD extends Optimizer
 
     /**
      * Returns the list of cost values for each iteration executed in
-     * last run of the optimization
+     * last run of the optimization.
      */
     public function getCostValues(): array
     {
@@ -211,7 +210,7 @@ class StochasticGD extends Optimizer
         $jValue = 0.0;
         $theta = $this->theta;
 
-        if ($this->gradientCb === null) {
+        if (null === $this->gradientCb) {
             throw new InvalidOperationException('Gradient callback is not defined');
         }
 
@@ -240,7 +239,7 @@ class StochasticGD extends Optimizer
 
     /**
      * Checks if the optimization is not effective enough and can be stopped
-     * in case large enough changes in the solution do not happen
+     * in case large enough changes in the solution do not happen.
      */
     protected function earlyStop(array $oldTheta): bool
     {
@@ -253,13 +252,13 @@ class StochasticGD extends Optimizer
             $this->theta
         );
 
-        if (array_sum($diff) == 0) {
+        if (0 == array_sum($diff)) {
             return true;
         }
 
         // Check if the last two cost values are almost the same
         $costs = array_slice($this->costValues, -2);
-        if (count($costs) === 2 && abs($costs[1] - $costs[0]) < $this->threshold) {
+        if (2 === count($costs) && abs($costs[1] - $costs[0]) < $this->threshold) {
             return true;
         }
 

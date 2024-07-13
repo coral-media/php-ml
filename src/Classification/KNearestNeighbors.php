@@ -29,7 +29,7 @@ class KNearestNeighbors implements Classifier
      */
     public function __construct(int $k = 3, ?Distance $distanceMetric = null)
     {
-        if ($distanceMetric === null) {
+        if (null === $distanceMetric) {
             $distanceMetric = new Euclidean();
         }
 
@@ -39,9 +39,6 @@ class KNearestNeighbors implements Classifier
         $this->distanceMetric = $distanceMetric;
     }
 
-    /**
-     * @return mixed
-     */
     protected function predictSample(array $sample)
     {
         $distances = $this->kNeighborsDistances($sample);

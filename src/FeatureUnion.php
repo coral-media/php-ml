@@ -18,7 +18,7 @@ final class FeatureUnion implements Transformer
      */
     public function __construct(array $pipelines)
     {
-        if ($pipelines === []) {
+        if ([] === $pipelines) {
             throw new InvalidArgumentException('At least one pipeline is required');
         }
 

@@ -9,35 +9,35 @@ use Phpml\Math\Matrix;
 
 /**
  * Class to compute eigen pairs (values & vectors) of a given matrix
- * with the consideration of numFeatures or totalVariance to be preserved
+ * with the consideration of numFeatures or totalVariance to be preserved.
  *
  * @author hp
  */
 abstract class EigenTransformerBase
 {
     /**
-     * Total variance to be conserved after the reduction
+     * Total variance to be conserved after the reduction.
      *
      * @var float
      */
     public $totalVariance = 0.9;
 
     /**
-     * Number of features to be preserved after the reduction
+     * Number of features to be preserved after the reduction.
      *
      * @var int
      */
-    public $numFeatures = null;
+    public $numFeatures;
 
     /**
-     * Top eigenvectors of the matrix
+     * Top eigenvectors of the matrix.
      *
      * @var array
      */
     protected $eigVectors = [];
 
     /**
-     * Top eigenValues of the matrix
+     * Top eigenValues of the matrix.
      *
      * @var array
      */
@@ -46,7 +46,7 @@ abstract class EigenTransformerBase
     /**
      * Calculates eigenValues and eigenVectors of the given matrix. Returns
      * top eigenVectors along with the largest eigenValues. The total explained variance
-     * of these eigenVectors will be no less than desired $totalVariance value
+     * of these eigenVectors will be no less than desired $totalVariance value.
      */
     protected function eigenDecomposition(array $matrix): void
     {
@@ -66,7 +66,7 @@ abstract class EigenTransformerBase
             $vectors[] = $eigVects[$i];
             $values[] = $eigVal;
 
-            if ($this->numFeatures !== null) {
+            if (null !== $this->numFeatures) {
                 if (count($vectors) == $this->numFeatures) {
                     break;
                 }
@@ -82,7 +82,7 @@ abstract class EigenTransformerBase
     }
 
     /**
-     * Returns the reduced data
+     * Returns the reduced data.
      */
     protected function reduce(array $data): array
     {

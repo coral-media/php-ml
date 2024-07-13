@@ -22,7 +22,7 @@ class BinaryStep implements ActivationFunction
      */
     public function differentiate($value, $computedvalue): float
     {
-        if ($value === 0 || $value === 0.0) {
+        if (0 === $value || 0.0 === $value) {
             return 1;
         }
 

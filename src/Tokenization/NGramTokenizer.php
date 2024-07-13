@@ -28,9 +28,6 @@ class NGramTokenizer extends WordTokenizer
         $this->maxGram = $maxGram;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function tokenize(string $text): array
     {
         $words = [];
@@ -48,8 +45,8 @@ class NGramTokenizer extends WordTokenizer
     {
         $length = mb_strlen($word);
 
-        for ($j = 1; $j <= $this->maxGram; $j++) {
-            for ($k = 0; $k < $length - $j + 1; $k++) {
+        for ($j = 1; $j <= $this->maxGram; ++$j) {
+            for ($k = 0; $k < $length - $j + 1; ++$k) {
                 if ($j >= $this->minGram) {
                     $nGrams[] = mb_substr($word, $k, $j);
                 }

@@ -4,7 +4,7 @@ namespace Phpml\Tokenization;
 
 /**
  * Based in Sam Hocevar <sam@hocevar.net> work,
- * see https://github.com/angeloskath/php-nlp-tools
+ * see https://github.com/angeloskath/php-nlp-tools.
  */
 class RegExpTokenizer implements Tokenizer
 {
@@ -14,9 +14,9 @@ class RegExpTokenizer implements Tokenizer
     {
         if (null === $regExpPatterns) {
             $this->regExpPatterns = [
-                ["/\s+/"," "],              // replace many spaces with one
+                ["/\s+/", ' '],              // replace many spaces with one
                 ["/'(m|ve|d|s)/", " '\$1"], // split I've, it's, we've, we'd...
-                "/\W/u"                     // split on every non-alphanumeric
+                "/\W/u",                     // split on every non-alphanumeric
             ];
         } else {
             $this->regExpPatterns = $regExpPatterns;
@@ -25,13 +25,13 @@ class RegExpTokenizer implements Tokenizer
 
     public function tokenize(string $text): array
     {
-        $text = array($text);
+        $text = [$text];
         foreach ($this->regExpPatterns as $regExpPattern) {
             if (!is_array($regExpPattern)) {
                 $regExpPattern = [$regExpPattern];
             }
 
-            if (count($regExpPattern) == 1) { // split pattern
+            if (1 == count($regExpPattern)) { // split pattern
                 $this->split($text, $regExpPattern[0]);
             } elseif (is_int($regExpPattern[1])) { // match pattern
                 $this->match($text, $regExpPattern[0], $regExpPattern[1]);
@@ -45,7 +45,7 @@ class RegExpTokenizer implements Tokenizer
 
     protected function split(array &$str, $pattern): void
     {
-        $tokens = array();
+        $tokens = [];
         foreach ($str as $s) {
             $tokens = array_merge(
                 $tokens,
@@ -58,7 +58,7 @@ class RegExpTokenizer implements Tokenizer
 
     protected function match(array &$str, $pattern, $keep): void
     {
-        $tokens = array();
+        $tokens = [];
         foreach ($str as $s) {
             preg_match_all($pattern, $s, $m);
             $tokens = array_merge(

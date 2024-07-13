@@ -39,9 +39,6 @@ class Backpropagation
         return $this->learningRate;
     }
 
-    /**
-     * @param mixed $targetClass
-     */
     public function backpropagate(array $layers, $targetClass): void
     {
         $layersNumber = count($layers);

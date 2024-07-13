@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace Phpml\Clustering\KMeans;
 
-use InvalidArgumentException;
-use LogicException;
 use Phpml\Clustering\KMeans;
-use SplObjectStorage;
 
-class Space extends SplObjectStorage
+class Space extends \SplObjectStorage
 {
     /**
      * @var int
@@ -19,7 +16,7 @@ class Space extends SplObjectStorage
     public function __construct(int $dimension)
     {
         if ($dimension < 1) {
-            throw new LogicException('a space dimension cannot be null or negative');
+            throw new \LogicException('a space dimension cannot be null or negative');
         }
 
         $this->dimension = $dimension;
@@ -37,22 +34,15 @@ class Space extends SplObjectStorage
         return ['points' => $points];
     }
 
-    /**
-     * @param mixed $label
-     */
     public function newPoint(array $coordinates, $label = null): Point
     {
         if (count($coordinates) !== $this->dimension) {
-            throw new LogicException('('.implode(',', $coordinates).') is not a point of this space');
+            throw new \LogicException('(' . implode(',', $coordinates) . ') is not a point of this space');
         }
 
         return new Point($coordinates, $label);
     }
 
-    /**
-     * @param mixed $label
-     * @param mixed $data
-     */
     public function addPoint(array $coordinates, $label = null, $data = null): void
     {
         $this->attach($this->newPoint($coordinates, $label), $data);
@@ -60,12 +50,11 @@ class Space extends SplObjectStorage
 
     /**
      * @param object $point
-     * @param mixed  $data
      */
     public function attach($point, $data = null): void
     {
         if (!$point instanceof Point) {
-            throw new InvalidArgumentException('can only attach points to spaces');
+            throw new \InvalidArgumentException('can only attach points to spaces');
         }
 
         parent::attach($point, $data);
@@ -81,7 +70,7 @@ class Space extends SplObjectStorage
      */
     public function getBoundaries()
     {
-        if (count($this) === 0) {
+        if (0 === count($this)) {
             return false;
         }
 
@@ -91,11 +80,11 @@ class Space extends SplObjectStorage
         /** @var Point $point */
         foreach ($this as $point) {
             for ($n = 0; $n < $this->dimension; ++$n) {
-                if ($min[$n] === null || $min[$n] > $point[$n]) {
+                if (null === $min[$n] || $min[$n] > $point[$n]) {
                     $min[$n] = $point[$n];
                 }
 
-                if ($max[$n] === null || $max[$n] < $point[$n]) {
+                if (null === $max[$n] || $max[$n] < $point[$n]) {
                     $max[$n] = $point[$n];
                 }
             }
@@ -160,20 +149,20 @@ class Space extends SplObjectStorage
     {
         $convergence = true;
 
-        $attach = new SplObjectStorage();
-        $detach = new SplObjectStorage();
+        $attach = new \SplObjectStorage();
+        $detach = new \SplObjectStorage();
 
         foreach ($clusters as $cluster) {
             foreach ($cluster as $point) {
                 $closest = $point->getClosest($clusters);
 
-                if ($closest === null) {
+                if (null === $closest) {
                     continue;
                 }
 
                 if ($closest !== $cluster) {
-                    $attach[$closest] ?? $attach[$closest] = new SplObjectStorage();
-                    $detach[$cluster] ?? $detach[$cluster] = new SplObjectStorage();
+                    $attach[$closest] ?? $attach[$closest] = new \SplObjectStorage();
+                    $detach[$cluster] ?? $detach[$cluster] = new \SplObjectStorage();
 
                     $attach[$closest]->attach($point);
                     $detach[$cluster]->attach($point);
@@ -213,14 +202,14 @@ class Space extends SplObjectStorage
 
         $clusters[] = new Cluster($this, $current->getCoordinates());
 
-        $distances = new SplObjectStorage();
+        $distances = new \SplObjectStorage();
 
         for ($i = 1; $i < $clustersNumber; ++$i) {
             $sum = 0;
             /** @var Point $point */
             foreach ($this as $point) {
                 $closest = $point->getClosest($clusters);
-                if ($closest === null) {
+                if (null === $closest) {
                     continue;
                 }
 

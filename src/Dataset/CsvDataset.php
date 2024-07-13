@@ -23,7 +23,7 @@ class CsvDataset extends ArrayDataset
         }
 
         $handle = fopen($filepath, 'rb');
-        if ($handle === false) {
+        if (false === $handle) {
             throw new FileException(sprintf('File "%s" can\'t be open.', basename($filepath)));
         }
 

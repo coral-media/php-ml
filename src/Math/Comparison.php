@@ -9,9 +9,6 @@ use Phpml\Exception\InvalidArgumentException;
 class Comparison
 {
     /**
-     * @param mixed $a
-     * @param mixed $b
-     *
      * @throws InvalidArgumentException
      */
     public static function compare($a, $b, string $operator): bool

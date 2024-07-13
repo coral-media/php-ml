@@ -18,7 +18,7 @@ class DataTransformer
         }
 
         foreach ($labels as $index => $label) {
-            $set .= sprintf('%s %s %s', ($targets ? $label : $numericLabels[$label]), self::sampleRow($samples[$index]), PHP_EOL);
+            $set .= sprintf('%s %s %s', $targets ? $label : $numericLabels[$label], self::sampleRow($samples[$index]), PHP_EOL);
         }
 
         return $set;
@@ -26,7 +26,7 @@ class DataTransformer
 
     public static function testSet(array $samples): string
     {
-        if (count($samples) === 0) {
+        if (0 === count($samples)) {
             throw new InvalidArgumentException('The array has zero elements');
         }
 

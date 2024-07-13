@@ -9,7 +9,6 @@ use Phpml\NeuralNetwork\Layer;
 use Phpml\NeuralNetwork\Node\Bias;
 use Phpml\NeuralNetwork\Node\Neuron;
 use PHPUnit\Framework\TestCase;
-use stdClass;
 
 class LayerTest extends TestCase
 {
@@ -43,7 +42,7 @@ class LayerTest extends TestCase
     public function testThrowExceptionOnInvalidNodeClass(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        new Layer(1, stdClass::class);
+        new Layer(1, \stdClass::class);
     }
 
     public function testAddNodesToLayer(): void

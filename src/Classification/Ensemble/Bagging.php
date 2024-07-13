@@ -9,7 +9,6 @@ use Phpml\Classification\DecisionTree;
 use Phpml\Exception\InvalidArgumentException;
 use Phpml\Helper\Predictable;
 use Phpml\Helper\Trainable;
-use ReflectionClass;
 
 class Bagging implements Classifier
 {
@@ -54,7 +53,7 @@ class Bagging implements Classifier
     /**
      * Creates an ensemble classifier with given number of base classifiers
      * Default number of base classifiers is 50.
-     * The more number of base classifiers, the better performance but at the cost of procesing time
+     * The more number of base classifiers, the better performance but at the cost of procesing time.
      */
     public function __construct(int $numClassifier = 50)
     {
@@ -135,9 +134,9 @@ class Bagging implements Classifier
     {
         $classifiers = [];
         for ($i = 0; $i < $this->numClassifier; ++$i) {
-            $ref = new ReflectionClass($this->classifier);
+            $ref = new \ReflectionClass($this->classifier);
             /** @var Classifier $obj */
-            $obj = count($this->classifierOptions) === 0 ? $ref->newInstance() : $ref->newInstanceArgs($this->classifierOptions);
+            $obj = 0 === count($this->classifierOptions) ? $ref->newInstance() : $ref->newInstanceArgs($this->classifierOptions);
 
             $classifiers[] = $this->initSingleClassifier($obj);
         }
@@ -150,14 +149,11 @@ class Bagging implements Classifier
         return $classifier;
     }
 
-    /**
-     * @return mixed
-     */
     protected function predictSample(array $sample)
     {
         $predictions = [];
         foreach ($this->classifiers as $classifier) {
-            /** @var Classifier $classifier */
+            /* @var Classifier $classifier */
             $predictions[] = $classifier->predict($sample);
         }
 

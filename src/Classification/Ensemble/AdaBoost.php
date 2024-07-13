@@ -12,7 +12,6 @@ use Phpml\Helper\Predictable;
 use Phpml\Helper\Trainable;
 use Phpml\Math\Statistic\Mean;
 use Phpml\Math\Statistic\StandardDeviation;
-use ReflectionClass;
 
 class AdaBoost implements Classifier
 {
@@ -20,7 +19,7 @@ class AdaBoost implements Classifier
     use Trainable;
 
     /**
-     * Actual labels given in the targets array
+     * Actual labels given in the targets array.
      *
      * @var array
      */
@@ -37,28 +36,28 @@ class AdaBoost implements Classifier
     protected $featureCount;
 
     /**
-     * Number of maximum iterations to be done
+     * Number of maximum iterations to be done.
      *
      * @var int
      */
     protected $maxIterations;
 
     /**
-     * Sample weights
+     * Sample weights.
      *
      * @var array
      */
     protected $weights = [];
 
     /**
-     * List of selected 'weak' classifiers
+     * List of selected 'weak' classifiers.
      *
      * @var array
      */
     protected $classifiers = [];
 
     /**
-     * Base classifier weights
+     * Base classifier weights.
      *
      * @var array
      */
@@ -85,7 +84,7 @@ class AdaBoost implements Classifier
     }
 
     /**
-     * Sets the base classifier that will be used for boosting (default = DecisionStump)
+     * Sets the base classifier that will be used for boosting (default = DecisionStump).
      */
     public function setBaseClassifier(string $baseClassifier = DecisionStump::class, array $classifierOptions = []): void
     {
@@ -100,7 +99,7 @@ class AdaBoost implements Classifier
     {
         // Initialize usual variables
         $this->labels = array_keys(array_count_values($targets));
-        if (count($this->labels) !== 2) {
+        if (2 !== count($this->labels)) {
             throw new InvalidArgumentException('AdaBoost is a binary classifier and can classify between two classes only');
         }
 
@@ -138,9 +137,6 @@ class AdaBoost implements Classifier
         }
     }
 
-    /**
-     * @return mixed
-     */
     public function predictSample(array $sample)
     {
         $sum = 0;
@@ -154,13 +150,13 @@ class AdaBoost implements Classifier
 
     /**
      * Returns the classifier with the lowest error rate with the
-     * consideration of current sample weights
+     * consideration of current sample weights.
      */
     protected function getBestClassifier(): Classifier
     {
-        $ref = new ReflectionClass($this->baseClassifier);
+        $ref = new \ReflectionClass($this->baseClassifier);
         /** @var Classifier $classifier */
-        $classifier = count($this->classifierOptions) === 0 ? $ref->newInstance() : $ref->newInstanceArgs($this->classifierOptions);
+        $classifier = 0 === count($this->classifierOptions) ? $ref->newInstance() : $ref->newInstanceArgs($this->classifierOptions);
 
         if ($classifier instanceof WeightedClassifier) {
             $classifier->setSampleWeights($this->weights);
@@ -175,7 +171,7 @@ class AdaBoost implements Classifier
 
     /**
      * Resamples the dataset in accordance with the weights and
-     * returns the new dataset
+     * returns the new dataset.
      */
     protected function resample(): array
     {
@@ -190,7 +186,7 @@ class AdaBoost implements Classifier
         foreach ($weights as $index => $weight) {
             $z = (int) round(($weight - $mean) / $std) - $minZ + 1;
             for ($i = 0; $i < $z; ++$i) {
-                if (random_int(0, 1) == 0) {
+                if (0 == random_int(0, 1)) {
                     continue;
                 }
 
@@ -203,7 +199,7 @@ class AdaBoost implements Classifier
     }
 
     /**
-     * Evaluates the classifier and returns the classification error rate
+     * Evaluates the classifier and returns the classification error rate.
      */
     protected function evaluateClassifier(Classifier $classifier): float
     {
@@ -220,11 +216,11 @@ class AdaBoost implements Classifier
     }
 
     /**
-     * Calculates alpha of a classifier
+     * Calculates alpha of a classifier.
      */
     protected function calculateAlpha(float $errorRate): float
     {
-        if ($errorRate == 0) {
+        if (0 == $errorRate) {
             $errorRate = 1e-10;
         }
 
@@ -232,7 +228,7 @@ class AdaBoost implements Classifier
     }
 
     /**
-     * Updates the sample weights
+     * Updates the sample weights.
      */
     protected function updateWeights(Classifier $classifier, float $alpha): void
     {

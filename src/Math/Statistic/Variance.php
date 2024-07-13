@@ -7,7 +7,7 @@ namespace Phpml\Math\Statistic;
 /**
  * In probability theory and statistics, variance is the expectation of the squared deviation of a random variable from its mean.
  * Informally, it measures how far a set of (random) numbers are spread out from their average value
- * https://en.wikipedia.org/wiki/Variance
+ * https://en.wikipedia.org/wiki/Variance.
  */
 final class Variance
 {

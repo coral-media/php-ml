@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Phpml\Tests\Clustering\KMeans;
 
-use LogicException;
 use Phpml\Clustering\KMeans\Cluster;
 use Phpml\Clustering\KMeans\Point;
 use Phpml\Clustering\KMeans\Space;
@@ -14,7 +13,7 @@ class ClusterTest extends TestCase
 {
     public function testThrowExceptionWhenAttachingToCluster(): void
     {
-        $this->expectException(LogicException::class);
+        $this->expectException(\LogicException::class);
         $this->expectExceptionMessage('Cannot attach a cluster to another');
 
         $cluster = new Cluster(new Space(1), []);

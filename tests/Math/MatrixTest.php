@@ -44,7 +44,7 @@ class MatrixTest extends TestCase
 
     public function testGetMatrixDeterminant(): void
     {
-        //http://matrix.reshish.com/determinant.php
+        // http://matrix.reshish.com/determinant.php
         $matrix = new Matrix([
             [3, 3, 3],
             [4, 2, 1],
@@ -144,7 +144,7 @@ class MatrixTest extends TestCase
 
     public function testInverseMatrix(): void
     {
-        //http://ncalculators.com/matrix/inverse-matrix.htm
+        // http://ncalculators.com/matrix/inverse-matrix.htm
         $matrix = new Matrix([
             [3, 4, 2],
             [4, 5, 5],

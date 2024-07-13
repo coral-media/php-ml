@@ -10,7 +10,7 @@ use Phpml\Math\Matrix;
 use PHPUnit\Framework\TestCase;
 
 /**
- * LUDecomposition is used and tested in Matrix::inverse method so not all tests are required
+ * LUDecomposition is used and tested in Matrix::inverse method so not all tests are required.
  */
 final class LUDecompositionTest extends TestCase
 {

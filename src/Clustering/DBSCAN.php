@@ -28,7 +28,7 @@ class DBSCAN implements Clusterer
 
     public function __construct(float $epsilon = 0.5, int $minSamples = 3, ?Distance $distanceMetric = null)
     {
-        if ($distanceMetric === null) {
+        if (null === $distanceMetric) {
             $distanceMetric = new Euclidean();
         }
 
@@ -69,7 +69,7 @@ class DBSCAN implements Clusterer
     {
         while (($index = array_pop($seeds)) !== null) {
             if (isset($labels[$index])) {
-                if ($labels[$index] === self::NOISE) {
+                if (self::NOISE === $labels[$index]) {
                     $labels[$index] = $n;
                 }
 
@@ -105,7 +105,7 @@ class DBSCAN implements Clusterer
         $clusters = array_fill(0, $n, []);
 
         foreach ($samples as $index => $sample) {
-            if ($labels[$index] !== self::NOISE) {
+            if (self::NOISE !== $labels[$index]) {
                 $clusters[$labels[$index]][$index] = $sample;
             }
         }

@@ -7,7 +7,6 @@ namespace Phpml\Tests\Association;
 use Phpml\Association\Apriori;
 use Phpml\ModelManager;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 
 class AprioriTest extends TestCase
 {
@@ -252,7 +251,7 @@ class AprioriTest extends TestCase
         $testSamples = [['alpha', 'epsilon'], ['beta', 'theta']];
         $predicted = $classifier->predict($testSamples);
 
-        $filename = 'apriori-test-'.random_int(100, 999).'-'.uniqid('', false);
+        $filename = 'apriori-test-' . random_int(100, 999) . '-' . uniqid('', false);
         $filepath = (string) tempnam(sys_get_temp_dir(), $filename);
         $modelManager = new ModelManager();
         $modelManager->saveToFile($classifier, $filepath);
@@ -267,12 +266,10 @@ class AprioriTest extends TestCase
      *
      * @param string $method Method name to be called
      * @param array  $params Array of params to be passed
-     *
-     * @return mixed
      */
     private static function invoke(Apriori $object, string $method, array $params = [])
     {
-        $reflection = new ReflectionClass($object::class);
+        $reflection = new \ReflectionClass($object::class);
         $method = $reflection->getMethod($method);
         $method->setAccessible(true);
 

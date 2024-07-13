@@ -24,7 +24,7 @@ class SynapseTest extends TestCase
         $synapse = new Synapse($node);
         $weight = $synapse->getWeight();
 
-        self::assertTrue($weight === -1. || $weight === 1.);
+        self::assertTrue(-1. === $weight || 1. === $weight);
     }
 
     public function testSynapseWeightChange(): void

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Phpml\Classification\Linear;
 
-use Closure;
 use Phpml\Classification\Classifier;
 use Phpml\Exception\InvalidArgumentException;
 use Phpml\Helper\OneVsRest;
@@ -62,7 +61,7 @@ class Perceptron implements Classifier, IncrementalEstimator
 
     /**
      * Initalize a perceptron classifier with given learning rate and maximum
-     * number of iterations used while training the perceptron
+     * number of iterations used while training the perceptron.
      *
      * @param float $learningRate  Value between 0.0(exclusive) and 1.0(inclusive)
      * @param int   $maxIterations Must be at least 1
@@ -94,7 +93,7 @@ class Perceptron implements Classifier, IncrementalEstimator
 
     public function trainBinary(array $samples, array $targets, array $labels): void
     {
-        if ($this->normalizer !== null) {
+        if (null !== $this->normalizer) {
             $this->normalizer->transform($samples);
         }
 
@@ -116,7 +115,7 @@ class Perceptron implements Classifier, IncrementalEstimator
     /**
      * Normally enabling early stopping for the optimization procedure may
      * help saving processing time while in some cases it may result in
-     * premature convergence.<br>
+     * premature convergence.<br>.
      *
      * If "false" is given, the optimization procedure will always be executed
      * for $maxIterations times
@@ -149,7 +148,7 @@ class Perceptron implements Classifier, IncrementalEstimator
 
     /**
      * Trains the perceptron model with Stochastic Gradient Descent optimization
-     * to get the correct set of weights
+     * to get the correct set of weights.
      */
     protected function runTraining(array $samples, array $targets): void
     {
@@ -169,13 +168,13 @@ class Perceptron implements Classifier, IncrementalEstimator
 
     /**
      * Executes a Gradient Descent algorithm for
-     * the given cost function
+     * the given cost function.
      */
-    protected function runGradientDescent(array $samples, array $targets, Closure $gradientFunc, bool $isBatch = false): void
+    protected function runGradientDescent(array $samples, array $targets, \Closure $gradientFunc, bool $isBatch = false): void
     {
         $class = $isBatch ? GD::class : StochasticGD::class;
 
-        if ($this->optimizer === null) {
+        if (null === $this->optimizer) {
             $this->optimizer = (new $class($this->featureCount))
                 ->setLearningRate($this->learningRate)
                 ->setMaxIterations($this->maxIterations)
@@ -189,11 +188,11 @@ class Perceptron implements Classifier, IncrementalEstimator
 
     /**
      * Checks if the sample should be normalized and if so, returns the
-     * normalized sample
+     * normalized sample.
      */
     protected function checkNormalizedSample(array $sample): array
     {
-        if ($this->normalizer !== null) {
+        if (null !== $this->normalizer) {
             $samples = [$sample];
             $this->normalizer->transform($samples);
             $sample = $samples[0];
@@ -203,7 +202,7 @@ class Perceptron implements Classifier, IncrementalEstimator
     }
 
     /**
-     * Calculates net output of the network as a float value for the given input
+     * Calculates net output of the network as a float value for the given input.
      *
      * @return int|float
      */
@@ -211,7 +210,7 @@ class Perceptron implements Classifier, IncrementalEstimator
     {
         $sum = 0;
         foreach ($this->weights as $index => $w) {
-            if ($index == 0) {
+            if (0 == $index) {
                 $sum += $w;
             } else {
                 $sum += $w * $sample[$index - 1];
@@ -222,7 +221,7 @@ class Perceptron implements Classifier, IncrementalEstimator
     }
 
     /**
-     * Returns the class value (either -1 or 1) for the given input
+     * Returns the class value (either -1 or 1) for the given input.
      */
     protected function outputClass(array $sample): int
     {
@@ -234,8 +233,6 @@ class Perceptron implements Classifier, IncrementalEstimator
      *
      * The probability is simply taken as the distance of the sample
      * to the decision plane.
-     *
-     * @param mixed $label
      */
     protected function predictProbability(array $sample, $label): float
     {
@@ -250,9 +247,6 @@ class Perceptron implements Classifier, IncrementalEstimator
         return 0.0;
     }
 
-    /**
-     * @return mixed
-     */
     protected function predictSampleBinary(array $sample)
     {
         $sample = $this->checkNormalizedSample($sample);

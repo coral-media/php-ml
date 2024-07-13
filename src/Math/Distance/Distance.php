@@ -8,7 +8,7 @@ use Phpml\Exception\InvalidArgumentException;
 use Phpml\Math\Distance as DistanceInterface;
 
 /**
- * Class Distance
+ * Class Distance.
  */
 abstract class Distance implements DistanceInterface
 {
@@ -52,7 +52,7 @@ abstract class Distance implements DistanceInterface
 
         $deltas = [];
 
-        for ($i = 0; $i < $count; $i++) {
+        for ($i = 0; $i < $count; ++$i) {
             $deltas[] = abs($a[$i] - $b[$i]);
         }
 

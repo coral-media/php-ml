@@ -9,17 +9,17 @@ use Phpml\Exception\InvalidArgumentException;
 class Adaline extends Perceptron
 {
     /**
-     * Batch training is the default Adaline training algorithm
+     * Batch training is the default Adaline training algorithm.
      */
     public const BATCH_TRAINING = 1;
 
     /**
-     * Online training: Stochastic gradient descent learning
+     * Online training: Stochastic gradient descent learning.
      */
     public const ONLINE_TRAINING = 2;
 
     /**
-     * Training type may be either 'Batch' or 'Online' learning
+     * Training type may be either 'Batch' or 'Online' learning.
      *
      * @var string|int
      */
@@ -27,7 +27,7 @@ class Adaline extends Perceptron
 
     /**
      * Initalize an Adaline (ADAptive LInear NEuron) classifier with given learning rate and maximum
-     * number of iterations used while training the classifier <br>
+     * number of iterations used while training the classifier <br>.
      *
      * Learning rate should be a float value between 0.0(exclusive) and 1.0 (inclusive) <br>
      * Maximum number of iterations can be an integer value greater than 0 <br>
@@ -53,7 +53,7 @@ class Adaline extends Perceptron
 
     /**
      * Adapts the weights with respect to given samples and targets
-     * by use of gradient descent learning rule
+     * by use of gradient descent learning rule.
      */
     protected function runTraining(array $samples, array $targets): void
     {
@@ -68,7 +68,7 @@ class Adaline extends Perceptron
             return [$error, $gradient];
         };
 
-        $isBatch = $this->trainingType == self::BATCH_TRAINING;
+        $isBatch = self::BATCH_TRAINING == $this->trainingType;
 
         parent::runGradientDescent($samples, $targets, $callback, $isBatch);
     }

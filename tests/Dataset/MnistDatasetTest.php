@@ -13,8 +13,8 @@ class MnistDatasetTest extends TestCase
     public function testSimpleMnistDataset(): void
     {
         $dataset = new MnistDataset(
-            __DIR__.'/Resources/mnist/images-idx-ubyte',
-            __DIR__.'/Resources/mnist/labels-idx-ubyte'
+            __DIR__ . '/Resources/mnist/images-idx-ubyte',
+            __DIR__ . '/Resources/mnist/labels-idx-ubyte'
         );
 
         self::assertCount(10, $dataset->getSamples());
@@ -26,8 +26,8 @@ class MnistDatasetTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
 
         new MnistDataset(
-            __DIR__.'/Resources/mnist/images-idx-ubyte',
-            __DIR__.'/Resources/mnist/labels-11-idx-ubyte'
+            __DIR__ . '/Resources/mnist/images-idx-ubyte',
+            __DIR__ . '/Resources/mnist/labels-11-idx-ubyte'
         );
     }
 }

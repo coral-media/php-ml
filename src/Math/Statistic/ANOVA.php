@@ -8,7 +8,7 @@ use Phpml\Exception\InvalidArgumentException;
 
 /**
  * Analysis of variance
- * https://en.wikipedia.org/wiki/Analysis_of_variance
+ * https://en.wikipedia.org/wiki/Analysis_of_variance.
  */
 final class ANOVA
 {
@@ -20,6 +20,7 @@ final class ANOVA
      * @param array[] $samples - each row is class samples
      *
      * @return float[]
+     *
      * @throws InvalidArgumentException
      */
     public static function oneWayF(array $samples): array
@@ -48,7 +49,7 @@ final class ANOVA
             return $s / $dfbn;
         }, $ssbn);
         $msw = array_map(static function ($s) use ($dfwn) {
-            if ($dfwn === 0) {
+            if (0 === $dfwn) {
                 return 1;
             }
 

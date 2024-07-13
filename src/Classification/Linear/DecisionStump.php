@@ -29,7 +29,7 @@ class DecisionStump extends WeightedClassifier
     protected $binaryLabels = [];
 
     /**
-     * Lowest error rate obtained while training/optimizing the model
+     * Lowest error rate obtained while training/optimizing the model.
      *
      * @var float
      */
@@ -40,9 +40,6 @@ class DecisionStump extends WeightedClassifier
      */
     protected $column;
 
-    /**
-     * @var mixed
-     */
     protected $value;
 
     /**
@@ -66,7 +63,7 @@ class DecisionStump extends WeightedClassifier
     protected $numSplitCount = 100.0;
 
     /**
-     * Distribution of samples in the leaves
+     * Distribution of samples in the leaves.
      *
      * @var array
      */
@@ -74,7 +71,7 @@ class DecisionStump extends WeightedClassifier
 
     /**
      * A DecisionStump classifier is a one-level deep DecisionTree. It is generally
-     * used with ensemble algorithms as in the weak classifier role. <br>
+     * used with ensemble algorithms as in the weak classifier role. <br>.
      *
      * If columnIndex is given, then the stump tries to produce a decision node
      * on this column, otherwise in cases given the value of -1, the stump itself
@@ -87,9 +84,9 @@ class DecisionStump extends WeightedClassifier
 
     public function __toString(): string
     {
-        return "IF {$this}->column {$this}->operator {$this}->value ".
-            'THEN '.$this->binaryLabels[0].' '.
-            'ELSE '.$this->binaryLabels[1];
+        return "IF {$this}->column {$this}->operator {$this}->value " .
+            'THEN ' . $this->binaryLabels[0] . ' ' .
+            'ELSE ' . $this->binaryLabels[1];
     }
 
     /**
@@ -97,7 +94,7 @@ class DecisionStump extends WeightedClassifier
      * DecisionStump looks for equally distanced values between minimum and maximum
      * values in the column. Given <i>$count</i> value determines how many split
      * points to be probed. The more split counts, the better performance but
-     * worse processing time (Default value is 10.0)
+     * worse processing time (Default value is 10.0).
      */
     public function setNumericalSplitCount(float $count): void
     {
@@ -119,7 +116,7 @@ class DecisionStump extends WeightedClassifier
 
         // Check the size of the weights given.
         // If none given, then assign 1 as a weight to each sample
-        if (count($this->weights) === 0) {
+        if (0 === count($this->weights)) {
             $this->weights = array_fill(0, count($samples), 1);
         } else {
             $numWeights = count($this->weights);
@@ -134,7 +131,7 @@ class DecisionStump extends WeightedClassifier
         // Try to find the best split in the columns of the dataset
         // by calculating error rate for each split point in each column
         $columns = range(0, count($samples[0]) - 1);
-        if ($this->givenColumnIndex !== self::AUTO_SELECT) {
+        if (self::AUTO_SELECT !== $this->givenColumnIndex) {
             $columns = [$this->givenColumnIndex];
         }
 
@@ -146,7 +143,7 @@ class DecisionStump extends WeightedClassifier
             'trainingErrorRate' => 1.0,
         ];
         foreach ($columns as $col) {
-            if ($this->columnTypes[$col] == DecisionTree::CONTINUOUS) {
+            if (DecisionTree::CONTINUOUS == $this->columnTypes[$col]) {
                 $split = $this->getBestNumericalSplit($samples, $targets, $col);
             } else {
                 $split = $this->getBestNominalSplit($samples, $targets, $col);
@@ -164,7 +161,7 @@ class DecisionStump extends WeightedClassifier
     }
 
     /**
-     * Determines best split point for the given column
+     * Determines best split point for the given column.
      */
     protected function getBestNumericalSplit(array $samples, array $targets, int $col): array
     {
@@ -241,7 +238,7 @@ class DecisionStump extends WeightedClassifier
 
     /**
      * Calculates the ratio of wrong predictions based on the new threshold
-     * value given as the parameter
+     * value given as the parameter.
      */
     protected function calculateErrorRate(array $targets, float $threshold, string $operator, array $values): array
     {
@@ -284,12 +281,10 @@ class DecisionStump extends WeightedClassifier
     }
 
     /**
-     * Returns the probability of the sample of belonging to the given label
+     * Returns the probability of the sample of belonging to the given label.
      *
      * Probability of a sample is calculated as the proportion of the label
      * within the labels of the training samples in the decision node
-     *
-     * @param mixed $label
      */
     protected function predictProbability(array $sample, $label): float
     {
@@ -301,9 +296,6 @@ class DecisionStump extends WeightedClassifier
         return 0.0;
     }
 
-    /**
-     * @return mixed
-     */
     protected function predictSampleBinary(array $sample)
     {
         if (Comparison::compare($sample[$this->column], $this->value, $this->operator)) {

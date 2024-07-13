@@ -32,7 +32,7 @@ class Mean
         sort($numbers, SORT_NUMERIC);
         $median = $numbers[$middleIndex];
 
-        if ($count % 2 === 0) {
+        if (0 === $count % 2) {
             $median = ($median + $numbers[$middleIndex - 1]) / 2;
         }
 
@@ -40,8 +40,6 @@ class Mean
     }
 
     /**
-     * @return mixed
-     *
      * @throws InvalidArgumentException
      */
     public static function mode(array $numbers)
@@ -58,7 +56,7 @@ class Mean
      */
     private static function checkArrayLength(array $array): void
     {
-        if (count($array) === 0) {
+        if (0 === count($array)) {
             throw new InvalidArgumentException('The array has zero elements');
         }
     }

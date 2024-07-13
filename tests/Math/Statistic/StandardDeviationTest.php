@@ -12,12 +12,12 @@ class StandardDeviationTest extends TestCase
 {
     public function testStandardDeviationOfPopulationSample(): void
     {
-        //https://pl.wikipedia.org/wiki/Odchylenie_standardowe
+        // https://pl.wikipedia.org/wiki/Odchylenie_standardowe
         $delta = 0.001;
         $population = [5, 6, 8, 9];
         self::assertEqualsWithDelta(1.825, StandardDeviation::population($population), $delta);
 
-        //http://www.stat.wmich.edu/s216/book/node126.html
+        // http://www.stat.wmich.edu/s216/book/node126.html
         $delta = 0.5;
         $population = [7100, 15500, 4400, 4400, 5900, 4600, 8800, 2000, 2750, 2550,  960, 1025];
         self::assertEqualsWithDelta(4079, StandardDeviation::population($population), $delta);
