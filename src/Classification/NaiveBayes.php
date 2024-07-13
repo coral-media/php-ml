@@ -76,9 +76,6 @@ class NaiveBayes implements Classifier
         }
     }
 
-    /**
-     * @return mixed
-     */
     protected function predictSample(array $sample)
     {
         // Use NaiveBayes assumption for each label using:
@@ -103,7 +100,7 @@ class NaiveBayes implements Classifier
 
     /**
      * Calculates vital statistics for each label & feature. Stores these
-     * values in private array in order to avoid repeated calculation
+     * values in private array in order to avoid repeated calculation.
      */
     private function calculateStatistics(string $label, array $samples): void
     {
@@ -134,7 +131,7 @@ class NaiveBayes implements Classifier
     }
 
     /**
-     * Calculates the probability P(label|sample_n)
+     * Calculates the probability P(label|sample_n).
      */
     private function sampleProbability(array $sample, int $feature, string $label): float
     {
@@ -143,9 +140,9 @@ class NaiveBayes implements Classifier
         }
 
         $value = $sample[$feature];
-        if ($this->dataType[$label][$feature] == self::NOMINAL) {
-            if (!isset($this->discreteProb[$label][$feature][$value]) ||
-                $this->discreteProb[$label][$feature][$value] == 0) {
+        if (self::NOMINAL == $this->dataType[$label][$feature]) {
+            if (!isset($this->discreteProb[$label][$feature][$value])
+                || 0 == $this->discreteProb[$label][$feature][$value]) {
                 return self::EPSILON;
             }
 
@@ -168,7 +165,7 @@ class NaiveBayes implements Classifier
     }
 
     /**
-     * Return samples belonging to specific label
+     * Return samples belonging to specific label.
      */
     private function getSamplesByLabel(string $label): array
     {

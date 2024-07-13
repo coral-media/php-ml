@@ -3,18 +3,6 @@
 declare(strict_types=1);
 
 /**
- * @package JAMA
- *
- * For an m-by-n matrix A with m >= n, the LU decomposition is an m-by-n
- * unit lower triangular matrix L, an n-by-n upper triangular matrix U,
- * and a permutation vector piv of length m so that A(piv,:) = L*U.
- * If m < n, then L is m-by-m and U is m-by-n.
- *
- * The LU decompostion with pivoting always exists, even if the matrix is
- * singular, so the constructor will never fail. The primary use of the
- * LU decomposition is in the solution of square systems of simultaneous
- * linear equations. This will fail if isNonsingular() returns false.
- *
  * @author Paul Meagher
  * @author Bartosz Matosiuk
  * @author Michael Bommarito
@@ -24,6 +12,7 @@ declare(strict_types=1);
  * @license PHP v3.0
  *
  *  Slightly changed to adapt the original code to PHP-ML library
+ *
  *  @date 2017/04/24
  *
  *  @author Mustafa Karabulut
@@ -37,7 +26,7 @@ use Phpml\Math\Matrix;
 class LUDecomposition
 {
     /**
-     * Decomposition storage
+     * Decomposition storage.
      *
      * @var array
      */
@@ -137,7 +126,7 @@ class LUDecomposition
             }
 
             // Compute multipliers.
-            if (($j < $this->m) && ($this->LU[$j][$j] != 0.0)) {
+            if (($j < $this->m) && (0.0 != $this->LU[$j][$j])) {
                 for ($i = $j + 1; $i < $this->m; ++$i) {
                     $this->LU[$i][$j] /= $this->LU[$j][$j];
                 }
@@ -200,7 +189,7 @@ class LUDecomposition
     }
 
     /**
-     * Alias for getPivot
+     * Alias for getPivot.
      *
      * @see getPivot
      */
@@ -212,12 +201,12 @@ class LUDecomposition
     /**
      * Is the matrix nonsingular?
      *
-     * @return bool true if U, and hence A, is nonsingular.
+     * @return bool true if U, and hence A, is nonsingular
      */
     public function isNonsingular(): bool
     {
         for ($j = 0; $j < $this->n; ++$j) {
-            if ($this->LU[$j][$j] == 0) {
+            if (0 == $this->LU[$j][$j]) {
                 return false;
             }
         }
@@ -236,9 +225,9 @@ class LUDecomposition
     }
 
     /**
-     * Solve A*X = B
+     * Solve A*X = B.
      *
-     * @param Matrix $B A Matrix with as many rows as A and any number of columns.
+     * @param Matrix $B a Matrix with as many rows as A and any number of columns
      *
      * @return array X so that L*U*X = B(piv,:)
      *

@@ -6,9 +6,6 @@ namespace Phpml\Helper;
 
 trait Predictable
 {
-    /**
-     * @return mixed
-     */
     public function predict(array $samples)
     {
         if (!is_array($samples[0])) {
@@ -23,8 +20,5 @@ trait Predictable
         return $predicted;
     }
 
-    /**
-     * @return mixed
-     */
     abstract protected function predictSample(array $sample);
 }

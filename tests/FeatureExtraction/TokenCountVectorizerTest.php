@@ -205,12 +205,12 @@ class TokenCountVectorizerTest extends TestCase
         $vocabulary = [
             0 => 'Lorem',
             1 => 'ipsum',
-            //2 => 'dolor',
+            // 2 => 'dolor',
             2 => 'sit',
             3 => 'amet',
             4 => 'Mauris',
             5 => 'placerat',
-            //7 => 'diam',
+            // 7 => 'diam',
             6 => 'eros',
             7 => 'fringilla',
         ];

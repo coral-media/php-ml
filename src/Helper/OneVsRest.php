@@ -26,7 +26,7 @@ trait OneVsRest
     protected $costValues = [];
 
     /**
-     * Train a binary classifier in the OvR style
+     * Train a binary classifier in the OvR style.
      */
     public function train(array $samples, array $targets): void
     {
@@ -51,13 +51,13 @@ trait OneVsRest
     protected function trainByLabel(array $samples, array $targets, array $allLabels = []): void
     {
         // Overwrites the current value if it exist. $allLabels must be provided for each partialTrain run.
-        $this->allLabels = count($allLabels) === 0 ? array_keys(array_count_values($targets)) : $allLabels;
+        $this->allLabels = 0 === count($allLabels) ? array_keys(array_count_values($targets)) : $allLabels;
         sort($this->allLabels, SORT_STRING);
 
         // If there are only two targets, then there is no need to perform OvR
-        if (count($this->allLabels) === 2) {
+        if (2 === count($this->allLabels)) {
             // Init classifier if required.
-            if (count($this->classifiers) === 0) {
+            if (0 === count($this->classifiers)) {
                 $this->classifiers[0] = $this->getClassifierCopy();
             }
 
@@ -99,12 +99,9 @@ trait OneVsRest
         return $classifier;
     }
 
-    /**
-     * @return mixed
-     */
     protected function predictSample(array $sample)
     {
-        if (count($this->allLabels) === 2) {
+        if (2 === count($this->allLabels)) {
             return $this->classifiers[0]->predictSampleBinary($sample);
         }
 
@@ -120,7 +117,7 @@ trait OneVsRest
     }
 
     /**
-     * Each classifier should implement this method instead of train(samples, targets)
+     * Each classifier should implement this method instead of train(samples, targets).
      */
     abstract protected function trainBinary(array $samples, array $targets, array $labels);
 
@@ -132,26 +129,20 @@ trait OneVsRest
     /**
      * Each classifier that make use of OvR approach should be able to
      * return a probability for a sample to belong to the given label.
-     *
-     * @return mixed
      */
     abstract protected function predictProbability(array $sample, string $label);
 
     /**
-     * Each classifier should implement this method instead of predictSample()
-     *
-     * @return mixed
+     * Each classifier should implement this method instead of predictSample().
      */
     abstract protected function predictSampleBinary(array $sample);
 
     /**
      * Groups all targets into two groups: Targets equal to
-     * the given label and the others
+     * the given label and the others.
      *
      * $targets is not passed by reference nor contains objects so this method
      * changes will not affect the caller $targets array.
-     *
-     * @param mixed $label
      *
      * @return array Binarized targets and target's labels
      */

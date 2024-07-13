@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Phpml\Clustering\KMeans;
 
-use ArrayAccess;
-
-class Point implements ArrayAccess, \Countable
+class Point implements \ArrayAccess, \Countable
 {
     /**
      * @var int
@@ -18,14 +16,8 @@ class Point implements ArrayAccess, \Countable
      */
     protected $coordinates = [];
 
-    /**
-     * @var mixed
-     */
     protected $label;
 
-    /**
-     * @param mixed $label
-     */
     public function __construct(array $coordinates, $label = null)
     {
         $this->dimension = count($coordinates);
@@ -83,36 +75,21 @@ class Point implements ArrayAccess, \Countable
         return $this->coordinates;
     }
 
-    /**
-     * @param mixed $offset
-     */
     public function offsetExists($offset): bool
     {
         return isset($this->coordinates[$offset]);
     }
 
-    /**
-     * @param mixed $offset
-     *
-     * @return mixed
-     */
     public function offsetGet(mixed $offset): mixed
     {
         return $this->coordinates[$offset];
     }
 
-    /**
-     * @param mixed $offset
-     * @param mixed $value
-     */
     public function offsetSet(mixed $offset, mixed $value): void
     {
         $this->coordinates[$offset] = $value;
     }
 
-    /**
-     * @param mixed $offset
-     */
     public function offsetUnset(mixed $offset): void
     {
         unset($this->coordinates[$offset]);

@@ -148,7 +148,7 @@ class FuzzyCMeans implements Clusterer
     protected function updateClusters(): void
     {
         $dim = $this->space->getDimension();
-        if (count($this->clusters) === 0) {
+        if (0 === count($this->clusters)) {
             for ($i = 0; $i < $this->clustersNumber; ++$i) {
                 $this->clusters[] = new Cluster($this->space, array_fill(0, $dim, 0.0));
             }
@@ -217,7 +217,7 @@ class FuzzyCMeans implements Clusterer
     /**
      * The objective is to minimize the distance between all data points
      * and all cluster centers. This method returns the summation of all
-     * these distances
+     * these distances.
      */
     protected function getObjective(): float
     {

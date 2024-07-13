@@ -28,9 +28,6 @@ class NGramWordTokenizer extends WordTokenizer
         $this->maxGram = $maxGram;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function tokenize(string $text): array
     {
         preg_match_all('/\w\w+/u', $text, $words);
@@ -38,7 +35,7 @@ class NGramWordTokenizer extends WordTokenizer
         $words = $words[0];
 
         $nGrams = [];
-        for ($j = $this->minGram; $j <= $this->maxGram; $j++) {
+        for ($j = $this->minGram; $j <= $this->maxGram; ++$j) {
             $nGrams = array_merge($nGrams, $this->getNgrams($words, $j));
         }
 
@@ -49,11 +46,11 @@ class NGramWordTokenizer extends WordTokenizer
     {
         $ngrams = [];
         $len = count($match);
-        for ($i = 0; $i < $len; $i++) {
+        for ($i = 0; $i < $len; ++$i) {
             if ($i > ($n - 2)) {
                 $ng = '';
-                for ($j = $n - 1; $j >= 0; $j--) {
-                    $ng .= ' '.$match[$i - $j];
+                for ($j = $n - 1; $j >= 0; --$j) {
+                    $ng .= ' ' . $match[$i - $j];
                 }
                 $ngrams[] = trim($ng);
             }

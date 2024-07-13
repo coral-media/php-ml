@@ -4,27 +4,26 @@ declare(strict_types=1);
 
 namespace Phpml\Helper\Optimizer;
 
-use Closure;
 use Phpml\Exception\InvalidArgumentException;
 
 abstract class Optimizer
 {
     /**
-     * Unknown variables to be found
+     * Unknown variables to be found.
      *
      * @var array
      */
     protected $theta = [];
 
     /**
-     * Number of dimensions
+     * Number of dimensions.
      *
      * @var int
      */
     protected $dimensions;
 
     /**
-     * Inits a new instance of Optimizer for the given number of dimensions
+     * Inits a new instance of Optimizer for the given number of dimensions.
      */
     public function __construct(int $dimensions)
     {
@@ -55,7 +54,7 @@ abstract class Optimizer
 
     /**
      * Executes the optimization with the given samples & targets
-     * and returns the weights
+     * and returns the weights.
      */
-    abstract public function runOptimization(array $samples, array $targets, Closure $gradientCb): array;
+    abstract public function runOptimization(array $samples, array $targets, \Closure $gradientCb): array;
 }

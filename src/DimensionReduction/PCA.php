@@ -12,7 +12,7 @@ use Phpml\Math\Statistic\Mean;
 class PCA extends EigenTransformerBase
 {
     /**
-     * Temporary storage for mean values for each dimension in given data
+     * Temporary storage for mean values for each dimension in given data.
      *
      * @var array
      */
@@ -27,7 +27,7 @@ class PCA extends EigenTransformerBase
      * PCA (Principal Component Analysis) used to explain given
      * data with lower number of dimensions. This analysis transforms the
      * data to a lower dimensional version of it by conserving a proportion of total variance
-     * within the data. It is a lossy data compression technique.<br>
+     * within the data. It is a lossy data compression technique.<br>.
      *
      * @param float $totalVariance Total explained variance to be preserved
      * @param int   $numFeatures   Number of features to be preserved
@@ -36,23 +36,23 @@ class PCA extends EigenTransformerBase
      */
     public function __construct(?float $totalVariance = null, ?int $numFeatures = null)
     {
-        if ($totalVariance !== null && ($totalVariance < 0.1 || $totalVariance > 0.99)) {
+        if (null !== $totalVariance && ($totalVariance < 0.1 || $totalVariance > 0.99)) {
             throw new InvalidArgumentException('Total variance can be a value between 0.1 and 0.99');
         }
 
-        if ($numFeatures !== null && $numFeatures <= 0) {
+        if (null !== $numFeatures && $numFeatures <= 0) {
             throw new InvalidArgumentException('Number of features to be preserved should be greater than 0');
         }
 
-        if (($totalVariance !== null) === ($numFeatures !== null)) {
+        if ((null !== $totalVariance) === (null !== $numFeatures)) {
             throw new InvalidArgumentException('Either totalVariance or numFeatures should be specified in order to run the algorithm');
         }
 
-        if ($numFeatures !== null) {
+        if (null !== $numFeatures) {
             $this->numFeatures = $numFeatures;
         }
 
-        if ($totalVariance !== null) {
+        if (null !== $totalVariance) {
             $this->totalVariance = $totalVariance;
         }
     }
@@ -61,7 +61,7 @@ class PCA extends EigenTransformerBase
      * Takes a data and returns a lower dimensional version
      * of this data while preserving $totalVariance or $numFeatures. <br>
      * $data is an n-by-m matrix and returned array is
-     * n-by-k matrix where k <= m
+     * n-by-k matrix where k <= m.
      */
     public function fit(array $data): array
     {
@@ -111,11 +111,11 @@ class PCA extends EigenTransformerBase
 
     /**
      * Normalization of the data includes subtracting mean from
-     * each dimension therefore dimensions will be centered to zero
+     * each dimension therefore dimensions will be centered to zero.
      */
     protected function normalize(array $data, int $n): array
     {
-        if (count($this->means) === 0) {
+        if (0 === count($this->means)) {
             $this->calculateMeans($data, $n);
         }
 

@@ -75,7 +75,7 @@ class BaggingTest extends TestCase
         $testSamples = [['sunny', 78, 72, 'false'], ['overcast', 60, 60, 'false']];
         $predicted = $classifier->predict($testSamples);
 
-        $filename = 'bagging-test-'.random_int(100, 999).'-'.uniqid('', false);
+        $filename = 'bagging-test-' . random_int(100, 999) . '-' . uniqid('', false);
         $filepath = (string) tempnam(sys_get_temp_dir(), $filename);
         $modelManager = new ModelManager();
         $modelManager->saveToFile($classifier, $filepath);

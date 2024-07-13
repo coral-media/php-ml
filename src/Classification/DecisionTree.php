@@ -90,7 +90,7 @@ class DecisionTree implements Classifier
 
         // If column names are given or computed before, then there is no
         // need to init it and accidentally remove the previous given names
-        if ($this->columnNames === []) {
+        if ([] === $this->columnNames) {
             $this->columnNames = range(0, $this->featureCount - 1);
         } elseif (count($this->columnNames) > $this->featureCount) {
             $this->columnNames = array_slice($this->columnNames, 0, $this->featureCount);
@@ -115,9 +115,6 @@ class DecisionTree implements Classifier
         return $types;
     }
 
-    /**
-     * @param mixed $baseValue
-     */
     public function getGiniIndex($baseValue, array $colValues, array $targets): float
     {
         $countMatrix = [];
@@ -179,7 +176,7 @@ class DecisionTree implements Classifier
      */
     public function setColumnNames(array $names)
     {
-        if ($this->featureCount !== 0 && count($names) !== $this->featureCount) {
+        if (0 !== $this->featureCount && count($names) !== $this->featureCount) {
             throw new InvalidArgumentException(sprintf('Length of the given array should be equal to feature count %s', $this->featureCount));
         }
 
@@ -196,11 +193,11 @@ class DecisionTree implements Classifier
     /**
      * This will return an array including an importance value for
      * each column in the given dataset. The importance values are
-     * normalized and their total makes 1.<br/>
+     * normalized and their total makes 1.<br/>.
      */
     public function getFeatureImportances(): array
     {
-        if ($this->featureImportances !== null) {
+        if (null !== $this->featureImportances) {
             return $this->featureImportances;
         }
 
@@ -249,7 +246,7 @@ class DecisionTree implements Classifier
         foreach ($records as $recordNo) {
             // Check if the previous record is the same with the current one
             $record = $this->samples[$recordNo];
-            if ($prevRecord !== null && $prevRecord != $record) {
+            if (null !== $prevRecord && $prevRecord != $record) {
                 $allSame = false;
             }
 
@@ -272,7 +269,7 @@ class DecisionTree implements Classifier
             }
         }
 
-        if ($allSame || $depth >= $this->maxDepth || count($remainingTargets) === 1) {
+        if ($allSame || $depth >= $this->maxDepth || 1 === count($remainingTargets)) {
             $split->isTerminal = true;
             arsort($remainingTargets);
             $split->classValue = (string) key($remainingTargets);
@@ -308,23 +305,23 @@ class DecisionTree implements Classifier
             $counts = array_count_values($colValues);
             arsort($counts);
             $baseValue = key($counts);
-            if ($baseValue === null) {
+            if (null === $baseValue) {
                 continue;
             }
 
             $gini = $this->getGiniIndex($baseValue, $colValues, $targets);
-            if ($bestSplit === null || $bestGiniVal > $gini) {
+            if (null === $bestSplit || $bestGiniVal > $gini) {
                 $split = new DecisionTreeLeaf();
                 $split->value = $baseValue;
                 $split->giniIndex = $gini;
                 $split->columnIndex = $i;
-                $split->isContinuous = $this->columnTypes[$i] === self::CONTINUOUS;
+                $split->isContinuous = self::CONTINUOUS === $this->columnTypes[$i];
                 $split->records = $records;
 
                 // If a numeric column is to be selected, then
                 // the original numeric value and the selected operator
                 // will also be saved into the leaf for future access
-                if ($this->columnTypes[$i] === self::CONTINUOUS) {
+                if (self::CONTINUOUS === $this->columnTypes[$i]) {
                     $matches = [];
                     preg_match("/^([<>=]{1,2})\s*(.*)/", (string) $split->value, $matches);
                     $split->operator = $matches[1];
@@ -341,7 +338,7 @@ class DecisionTree implements Classifier
 
     /**
      * Returns available features/columns to the tree for the decision making
-     * process. <br>
+     * process. <br>.
      *
      * If a number is given with setNumFeatures() method, then a random selection
      * of features up to this number is returned. <br>
@@ -355,7 +352,7 @@ class DecisionTree implements Classifier
     protected function getSelectedFeatures(): array
     {
         $allFeatures = range(0, $this->featureCount - 1);
-        if ($this->numUsableFeatures === 0 && count($this->selectedFeatures) === 0) {
+        if (0 === $this->numUsableFeatures && 0 === count($this->selectedFeatures)) {
             return $allFeatures;
         }
 
@@ -382,7 +379,7 @@ class DecisionTree implements Classifier
         $columns = [];
         for ($i = 0; $i < $this->featureCount; ++$i) {
             $values = array_column($samples, $i);
-            if ($this->columnTypes[$i] == self::CONTINUOUS) {
+            if (self::CONTINUOUS == $this->columnTypes[$i]) {
                 $median = Mean::median($values);
                 foreach ($values as &$value) {
                     if ($value <= $median) {
@@ -426,7 +423,7 @@ class DecisionTree implements Classifier
     }
 
     /**
-     * Used to set predefined features to consider while deciding which column to use for a split
+     * Used to set predefined features to consider while deciding which column to use for a split.
      */
     protected function setSelectedFeatures(array $selectedFeatures): void
     {
@@ -435,7 +432,7 @@ class DecisionTree implements Classifier
 
     /**
      * Collects and returns an array of internal nodes that use the given
-     * column as a split criterion
+     * column as a split criterion.
      */
     protected function getSplitNodesByColumn(int $column, DecisionTreeLeaf $node): array
     {
@@ -450,20 +447,17 @@ class DecisionTree implements Classifier
 
         $lNodes = [];
         $rNodes = [];
-        if ($node->leftLeaf !== null) {
+        if (null !== $node->leftLeaf) {
             $lNodes = $this->getSplitNodesByColumn($column, $node->leftLeaf);
         }
 
-        if ($node->rightLeaf !== null) {
+        if (null !== $node->rightLeaf) {
             $rNodes = $this->getSplitNodesByColumn($column, $node->rightLeaf);
         }
 
         return array_merge($nodes, $lNodes, $rNodes);
     }
 
-    /**
-     * @return mixed
-     */
     protected function predictSample(array $sample)
     {
         $node = $this->tree;

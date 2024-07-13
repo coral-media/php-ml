@@ -53,9 +53,9 @@
         }
     },
     "scripts": {
-        "check-cs": "vendor/bin/ecs check src tests bin",
-        "fix-cs": "vendor/bin/ecs check src tests bin --fix",
-        "phpstan": "vendor/bin/phpstan.phar analyse src tests bin --level max --configuration phpstan.neon",
+        "check-cs": "vendor/bin/php-cs-fixer check",
+        "fix-cs": "vendor/bin/php-cs-fixer fix",
+        "phpstan": "vendor/bin/phpstan",
         "build": [
             "@check-cs",
             "@phpstan",

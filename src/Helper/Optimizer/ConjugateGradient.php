@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Phpml\Helper\Optimizer;
 
-use Closure;
-
 /**
  * Conjugate Gradient method to solve a non-linear f(x) with respect to unknown x
- * See https://en.wikipedia.org/wiki/Nonlinear_conjugate_gradient_method)
+ * See https://en.wikipedia.org/wiki/Nonlinear_conjugate_gradient_method).
  *
  * The method applied below is explained in the below document in a practical manner
  *  - http://web.cs.iastate.edu/~cs577/handouts/conjugate-gradient.pdf
@@ -19,7 +17,7 @@ use Closure;
  */
 class ConjugateGradient extends GD
 {
-    public function runOptimization(array $samples, array $targets, Closure $gradientCb): array
+    public function runOptimization(array $samples, array $targets, \Closure $gradientCb): array
     {
         $this->samples = $samples;
         $this->targets = $targets;
@@ -68,7 +66,7 @@ class ConjugateGradient extends GD
         // Calculate gradient for each dimension
         $gradient = [];
         for ($i = 0; $i <= $this->dimensions; ++$i) {
-            if ($i === 0) {
+            if (0 === $i) {
                 $gradient[$i] = array_sum($updates);
             } else {
                 $col = array_column($this->samples, $i - 1);
@@ -85,7 +83,7 @@ class ConjugateGradient extends GD
     }
 
     /**
-     * Returns the value of f(x) for given solution
+     * Returns the value of f(x) for given solution.
      */
     protected function cost(array $theta): float
     {
@@ -148,7 +146,7 @@ class ConjugateGradient extends GD
             }
         }
 
-        if ($d[$imax] == 0) {
+        if (0 == $d[$imax]) {
             return $x1[$imax] - $this->theta[$imax];
         }
 
@@ -190,7 +188,7 @@ class ConjugateGradient extends GD
     }
 
     /**
-     * Calculates the new conjugate direction
+     * Calculates the new conjugate direction.
      *
      * d(k+1) =–∇f(x(k+1)) + β(k).d(k)
      */
@@ -204,12 +202,12 @@ class ConjugateGradient extends GD
 
 /**
  * Handles element-wise vector operations between vector-vector
- * and vector-scalar variables
+ * and vector-scalar variables.
  */
 class MP
 {
     /**
-     * Element-wise <b>multiplication</b> of two vectors of the same size
+     * Element-wise <b>multiplication</b> of two vectors of the same size.
      */
     public static function mul(array $m1, array $m2): array
     {
@@ -222,7 +220,7 @@ class MP
     }
 
     /**
-     * Element-wise <b>division</b> of two vectors of the same size
+     * Element-wise <b>division</b> of two vectors of the same size.
      */
     public static function div(array $m1, array $m2): array
     {
@@ -235,7 +233,7 @@ class MP
     }
 
     /**
-     * Element-wise <b>addition</b> of two vectors of the same size
+     * Element-wise <b>addition</b> of two vectors of the same size.
      */
     public static function add(array $m1, array $m2, int $mag = 1): array
     {
@@ -248,7 +246,7 @@ class MP
     }
 
     /**
-     * Element-wise <b>subtraction</b> of two vectors of the same size
+     * Element-wise <b>subtraction</b> of two vectors of the same size.
      */
     public static function sub(array $m1, array $m2): array
     {
@@ -256,7 +254,7 @@ class MP
     }
 
     /**
-     * Element-wise <b>multiplication</b> of a vector with a scalar
+     * Element-wise <b>multiplication</b> of a vector with a scalar.
      */
     public static function muls(array $m1, float $m2): array
     {
@@ -269,7 +267,7 @@ class MP
     }
 
     /**
-     * Element-wise <b>division</b> of a vector with a scalar
+     * Element-wise <b>division</b> of a vector with a scalar.
      */
     public static function divs(array $m1, float $m2): array
     {
@@ -282,7 +280,7 @@ class MP
     }
 
     /**
-     * Element-wise <b>addition</b> of a vector with a scalar
+     * Element-wise <b>addition</b> of a vector with a scalar.
      */
     public static function adds(array $m1, float $m2, int $mag = 1): array
     {
@@ -295,7 +293,7 @@ class MP
     }
 
     /**
-     * Element-wise <b>subtraction</b> of a vector with a scalar
+     * Element-wise <b>subtraction</b> of a vector with a scalar.
      */
     public static function subs(array $m1, float $m2): array
     {

@@ -24,16 +24,16 @@ final class SelectKBest implements Transformer
     /**
      * @var array|null
      */
-    private $scores = null;
+    private $scores;
 
     /**
      * @var array|null
      */
-    private $keepColumns = null;
+    private $keepColumns;
 
     public function __construct(int $k = 10, ?ScoringFunction $scoringFunction = null)
     {
-        if ($scoringFunction === null) {
+        if (null === $scoringFunction) {
             $scoringFunction = new ANOVAFValue();
         }
 
@@ -43,7 +43,7 @@ final class SelectKBest implements Transformer
 
     public function fit(array $samples, ?array $targets = null): void
     {
-        if ($targets === null || count($targets) === 0) {
+        if (null === $targets || 0 === count($targets)) {
             throw new InvalidArgumentException('The array has zero elements');
         }
 
@@ -58,7 +58,7 @@ final class SelectKBest implements Transformer
 
     public function transform(array &$samples, ?array &$targets = null): void
     {
-        if ($this->keepColumns === null) {
+        if (null === $this->keepColumns) {
             return;
         }
 
@@ -69,7 +69,7 @@ final class SelectKBest implements Transformer
 
     public function scores(): array
     {
-        if ($this->scores === null) {
+        if (null === $this->scores) {
             throw new InvalidOperationException('SelectKBest require to fit first to get scores');
         }
 

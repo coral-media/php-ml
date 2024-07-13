@@ -163,7 +163,7 @@ class ClassificationReport
     {
         foreach (['precision', 'recall', 'f1score'] as $metric) {
             $values = $this->{$metric};
-            if (count($values) == 0) {
+            if (0 == count($values)) {
                 $this->average[$metric] = 0.0;
 
                 continue;
@@ -177,7 +177,7 @@ class ClassificationReport
     {
         foreach (['precision', 'recall', 'f1score'] as $metric) {
             $values = $this->{$metric};
-            if (count($values) == 0) {
+            if (0 == count($values)) {
                 $this->average[$metric] = 0.0;
 
                 continue;
@@ -195,7 +195,7 @@ class ClassificationReport
     private function computePrecision(int $truePositive, int $falsePositive): float
     {
         $divider = $truePositive + $falsePositive;
-        if ($divider == 0) {
+        if (0 == $divider) {
             return 0.0;
         }
 
@@ -205,7 +205,7 @@ class ClassificationReport
     private function computeRecall(int $truePositive, int $falseNegative): float
     {
         $divider = $truePositive + $falseNegative;
-        if ($divider == 0) {
+        if (0 == $divider) {
             return 0.0;
         }
 
@@ -215,7 +215,7 @@ class ClassificationReport
     private function computeF1Score(float $precision, float $recall): float
     {
         $divider = $precision + $recall;
-        if ($divider == 0) {
+        if (0 == $divider) {
             return 0.0;
         }
 

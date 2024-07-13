@@ -49,9 +49,6 @@ abstract class LayeredNetwork implements Network
         return $result;
     }
 
-    /**
-     * @param mixed $input
-     */
     public function setInput($input): Network
     {
         $firstLayer = $this->layers[0];

@@ -11,8 +11,8 @@ class WhitespaceTokenizer implements Tokenizer
     public function tokenize(string $text): array
     {
         $substrings = preg_split('/[\pZ\pC]+/u', $text, -1, PREG_SPLIT_NO_EMPTY);
-        if ($substrings === false) {
-            throw new InvalidArgumentException('preg_split failed on: '.$text);
+        if (false === $substrings) {
+            throw new InvalidArgumentException('preg_split failed on: ' . $text);
         }
 
         return $substrings;

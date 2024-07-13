@@ -4,23 +4,22 @@ declare(strict_types=1);
 
 namespace Phpml\Helper\Optimizer;
 
-use Closure;
 use Phpml\Exception\InvalidOperationException;
 
 /**
  * Batch version of Gradient Descent to optimize the weights
- * of a classifier given samples, targets and the objective function to minimize
+ * of a classifier given samples, targets and the objective function to minimize.
  */
 class GD extends StochasticGD
 {
     /**
-     * Number of samples given
+     * Number of samples given.
      *
      * @var int|null
      */
     protected $sampleCount;
 
-    public function runOptimization(array $samples, array $targets, Closure $gradientCb): array
+    public function runOptimization(array $samples, array $targets, \Closure $gradientCb): array
     {
         $this->samples = $samples;
         $this->targets = $targets;
@@ -52,7 +51,7 @@ class GD extends StochasticGD
 
     /**
      * Calculates gradient, cost function and penalty term for each sample
-     * then returns them as an array of values
+     * then returns them as an array of values.
      */
     protected function gradient(array $theta): array
     {
@@ -60,7 +59,7 @@ class GD extends StochasticGD
         $gradient = [];
         $totalPenalty = 0;
 
-        if ($this->gradientCb === null) {
+        if (null === $this->gradientCb) {
             throw new InvalidOperationException('Gradient callback is not defined');
         }
 
@@ -84,7 +83,7 @@ class GD extends StochasticGD
     {
         // Updates all weights at once
         for ($i = 0; $i <= $this->dimensions; ++$i) {
-            if ($i === 0) {
+            if (0 === $i) {
                 $this->theta[0] -= $this->learningRate * array_sum($updates);
             } else {
                 $col = array_column($this->samples, $i - 1);

@@ -39,9 +39,6 @@ class LeastSquares implements Regression
         $this->computeCoefficients();
     }
 
-    /**
-     * @return mixed
-     */
     public function predictSample(array $sample)
     {
         $result = $this->intercept;

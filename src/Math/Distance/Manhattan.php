@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Phpml\Math\Distance;
 
 /**
- * Class Manhattan
+ * Class Manhattan.
  *
  * L^1 Metric.
  */

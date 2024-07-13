@@ -183,7 +183,7 @@ class MLPClassifierTest extends TestCase
         $testSamples = [[0, 0], [1, 0], [0, 1], [1, 1]];
         $predicted = $classifier->predict($testSamples);
 
-        $filename = 'perceptron-test-'.random_int(100, 999).'-'.uniqid('', false);
+        $filename = 'perceptron-test-' . random_int(100, 999) . '-' . uniqid('', false);
         $filepath = (string) tempnam(sys_get_temp_dir(), $filename);
         $modelManager = new ModelManager();
         $modelManager->saveToFile($classifier, $filepath);
@@ -204,7 +204,7 @@ class MLPClassifierTest extends TestCase
         self::assertEquals('a', $network->predict([1, 0]));
         self::assertEquals('b', $network->predict([0, 1]));
 
-        $filename = 'perceptron-test-'.random_int(100, 999).'-'.uniqid('', false);
+        $filename = 'perceptron-test-' . random_int(100, 999) . '-' . uniqid('', false);
         $filepath = (string) tempnam(sys_get_temp_dir(), $filename);
         $modelManager = new ModelManager();
         $modelManager->saveToFile($network, $filepath);

@@ -23,7 +23,7 @@ class RandomForest extends Bagging
     /**
      * Initializes RandomForest with the given number of trees. More trees
      * may increase the prediction performance while it will also substantially
-     * increase the processing time and the required memory
+     * increase the processing time and the required memory.
      */
     public function __construct(int $numClassifier = 50)
     {
@@ -34,14 +34,12 @@ class RandomForest extends Bagging
 
     /**
      * This method is used to determine how many of the original columns (features)
-     * will be used to construct subsets to train base classifiers.<br>
+     * will be used to construct subsets to train base classifiers.<br>.
      *
      * Allowed values: 'sqrt', 'log' or any float number between 0.1 and 1.0 <br>
      *
      * Default value for the ratio is 'log' which results in log(numFeatures, 2) + 1
      * features to be taken into consideration while selecting subspace of features
-     *
-     * @param mixed $ratio
      */
     public function setFeatureSubsetRatio($ratio): self
     {
@@ -53,7 +51,7 @@ class RandomForest extends Bagging
             throw new InvalidArgumentException('When a float is given, feature subset ratio should be between 0.1 and 1.0');
         }
 
-        if (is_string($ratio) && $ratio !== 'sqrt' && $ratio !== 'log') {
+        if (is_string($ratio) && 'sqrt' !== $ratio && 'log' !== $ratio) {
             throw new InvalidArgumentException("When a string is given, feature subset ratio can only be 'sqrt' or 'log'");
         }
 
@@ -63,13 +61,13 @@ class RandomForest extends Bagging
     }
 
     /**
-     * RandomForest algorithm is usable *only* with DecisionTree
+     * RandomForest algorithm is usable *only* with DecisionTree.
      *
      * @return $this
      */
     public function setClassifer(string $classifier, array $classifierOptions = [])
     {
-        if ($classifier !== DecisionTree::class) {
+        if (DecisionTree::class !== $classifier) {
             throw new InvalidArgumentException('RandomForest can only use DecisionTree as base classifier');
         }
 
@@ -81,7 +79,7 @@ class RandomForest extends Bagging
     /**
      * This will return an array including an importance value for
      * each column in the given dataset. Importance values for a column
-     * is the average importance of that column in all trees in the forest
+     * is the average importance of that column in all trees in the forest.
      */
     public function getFeatureImportances(): array
     {
@@ -112,7 +110,7 @@ class RandomForest extends Bagging
 
     /**
      * A string array to represent the columns is given. They are useful
-     * when trying to print some information about the trees such as feature importances
+     * when trying to print some information about the trees such as feature importances.
      *
      * @return $this
      */
@@ -129,14 +127,12 @@ class RandomForest extends Bagging
     protected function initSingleClassifier(Classifier $classifier): Classifier
     {
         if (!$classifier instanceof DecisionTree) {
-            throw new InvalidArgumentException(
-                sprintf('Classifier %s expected, got %s', DecisionTree::class, $classifier::class)
-            );
+            throw new InvalidArgumentException(sprintf('Classifier %s expected, got %s', DecisionTree::class, $classifier::class));
         }
 
         if (is_float($this->featureSubsetRatio)) {
             $featureCount = (int) ($this->featureSubsetRatio * $this->featureCount);
-        } elseif ($this->featureSubsetRatio === 'sqrt') {
+        } elseif ('sqrt' === $this->featureSubsetRatio) {
             $featureCount = (int) ($this->featureCount ** .5) + 1;
         } else {
             $featureCount = (int) log($this->featureCount, 2) + 1;
@@ -146,7 +142,7 @@ class RandomForest extends Bagging
             $featureCount = $this->featureCount;
         }
 
-        if ($this->columnNames === null) {
+        if (null === $this->columnNames) {
             $this->columnNames = range(0, $this->featureCount - 1);
         }
 

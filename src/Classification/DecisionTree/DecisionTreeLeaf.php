@@ -45,7 +45,7 @@ class DecisionTreeLeaf
 
     /**
      * Class value represented by the leaf, this value is non-empty
-     * only for terminal leaves
+     * only for terminal leaves.
      *
      * @var string
      */
@@ -72,7 +72,7 @@ class DecisionTreeLeaf
     public $level = 0;
 
     /**
-     * HTML representation of the tree without column names
+     * HTML representation of the tree without column names.
      */
     public function __toString(): string
     {
@@ -92,7 +92,7 @@ class DecisionTreeLeaf
 
     /**
      * Returns Mean Decrease Impurity (MDI) in the node.
-     * For terminal nodes, this value is equal to 0
+     * For terminal nodes, this value is equal to 0.
      */
     public function getNodeImpurityDecrease(int $parentRecordCount): float
     {
@@ -103,12 +103,12 @@ class DecisionTreeLeaf
         $nodeSampleCount = (float) count($this->records);
         $iT = $this->giniIndex;
 
-        if ($this->leftLeaf !== null) {
+        if (null !== $this->leftLeaf) {
             $pL = count($this->leftLeaf->records) / $nodeSampleCount;
             $iT -= $pL * $this->leftLeaf->giniIndex;
         }
 
-        if ($this->rightLeaf !== null) {
+        if (null !== $this->rightLeaf) {
             $pR = count($this->rightLeaf->records) / $nodeSampleCount;
             $iT -= $pR * $this->rightLeaf->giniIndex;
         }
@@ -117,7 +117,7 @@ class DecisionTreeLeaf
     }
 
     /**
-     * Returns HTML representation of the node including children nodes
+     * Returns HTML representation of the node including children nodes.
      */
     public function getHTML(?array $columnNames = null): string
     {
@@ -125,32 +125,32 @@ class DecisionTreeLeaf
             $value = "<b>{$this}->classValue</b>";
         } else {
             $value = $this->value;
-            if ($columnNames !== null) {
+            if (null !== $columnNames) {
                 $col = $columnNames[$this->columnIndex];
             } else {
                 $col = "col_$this->columnIndex";
             }
 
-            if ((bool) preg_match('/^[<>=]{1,2}/', (string) $value) === false) {
+            if (false === (bool) preg_match('/^[<>=]{1,2}/', (string) $value)) {
                 $value = "={$value}";
             }
 
-            $value = "<b>{$col} {$value}</b><br>Gini: ".number_format($this->giniIndex, 2);
+            $value = "<b>{$col} {$value}</b><br>Gini: " . number_format($this->giniIndex, 2);
         }
 
         $str = "<table ><tr><td colspan=3 align=center style='border:1px solid;'>{$value}</td></tr>";
 
-        if ($this->leftLeaf !== null || $this->rightLeaf !== null) {
+        if (null !== $this->leftLeaf || null !== $this->rightLeaf) {
             $str .= '<tr>';
-            if ($this->leftLeaf !== null) {
-                $str .= '<td valign=top><b>| Yes</b><br>'.$this->leftLeaf->getHTML($columnNames).'</td>';
+            if (null !== $this->leftLeaf) {
+                $str .= '<td valign=top><b>| Yes</b><br>' . $this->leftLeaf->getHTML($columnNames) . '</td>';
             } else {
                 $str .= '<td></td>';
             }
 
             $str .= '<td>&nbsp;</td>';
-            if ($this->rightLeaf !== null) {
-                $str .= '<td valign=top align=right><b>No |</b><br>'.$this->rightLeaf->getHTML($columnNames).'</td>';
+            if (null !== $this->rightLeaf) {
+                $str .= '<td valign=top align=right><b>No |</b><br>' . $this->rightLeaf->getHTML($columnNames) . '</td>';
             } else {
                 $str .= '<td></td>';
             }

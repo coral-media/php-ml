@@ -14,7 +14,7 @@ class ModelManagerTest extends TestCase
     public function testSaveAndRestore(): void
     {
         $filename = uniqid('', false);
-        $filepath = sys_get_temp_dir().DIRECTORY_SEPARATOR.$filename;
+        $filepath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $filename;
 
         $estimator = new LeastSquares();
         $modelManager = new ModelManager();
@@ -27,7 +27,7 @@ class ModelManagerTest extends TestCase
     public function testRestoreWrongFile(): void
     {
         $this->expectException(FileException::class);
-        $filepath = sys_get_temp_dir().DIRECTORY_SEPARATOR.'unexisting';
+        $filepath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'unexisting';
         $modelManager = new ModelManager();
         $modelManager->restoreFromFile($filepath);
     }

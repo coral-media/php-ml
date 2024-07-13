@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Phpml\Math\Distance;
 
 /**
- * Class Euclidean
+ * Class Euclidean.
  *
  * L^2 Metric.
  */
@@ -20,7 +20,7 @@ class Euclidean extends Distance
     }
 
     /**
-     * Square of Euclidean distance
+     * Square of Euclidean distance.
      *
      * @throws \Phpml\Exception\InvalidArgumentException
      */

@@ -6,7 +6,6 @@ namespace Phpml\Tests\Math;
 
 use Phpml\Math\Product;
 use PHPUnit\Framework\TestCase;
-use stdClass;
 
 class ProductTest extends TestCase
 {
@@ -16,7 +15,7 @@ class ProductTest extends TestCase
         self::assertEquals(-0.1, Product::scalar([1, 4, 1], [-2, 0.5, -0.1]));
         self::assertEquals(8, Product::scalar([2], [4]));
 
-        //test for non numeric values
-        self::assertEquals(0, Product::scalar(['', null, [], new stdClass()], [null]));
+        // test for non numeric values
+        self::assertEquals(0, Product::scalar(['', null, [], new \stdClass()], [null]));
     }
 }

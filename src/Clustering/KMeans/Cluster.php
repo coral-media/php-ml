@@ -4,12 +4,7 @@ declare(strict_types=1);
 
 namespace Phpml\Clustering\KMeans;
 
-use IteratorAggregate;
-use LogicException;
-use SplObjectStorage;
-use Traversable;
-
-class Cluster extends Point implements IteratorAggregate
+class Cluster extends Point implements \IteratorAggregate
 {
     /**
      * @var Space
@@ -17,7 +12,7 @@ class Cluster extends Point implements IteratorAggregate
     protected $space;
 
     /**
-     * @var SplObjectStorage|Point[]
+     * @var \SplObjectStorage|Point[]
      */
     protected $points;
 
@@ -25,14 +20,14 @@ class Cluster extends Point implements IteratorAggregate
     {
         parent::__construct($coordinates);
         $this->space = $space;
-        $this->points = new SplObjectStorage();
+        $this->points = new \SplObjectStorage();
     }
 
     public function getPoints(): array
     {
         $points = [];
         foreach ($this->points as $point) {
-            if ($point->label === null) {
+            if (null === $point->label) {
                 $points[] = $point->toArray();
             } else {
                 $points[$point->label] = $point->toArray();
@@ -53,7 +48,7 @@ class Cluster extends Point implements IteratorAggregate
     public function attach(Point $point): Point
     {
         if ($point instanceof self) {
-            throw new LogicException('Cannot attach a cluster to another');
+            throw new \LogicException('Cannot attach a cluster to another');
         }
 
         $this->points->attach($point);
@@ -68,12 +63,12 @@ class Cluster extends Point implements IteratorAggregate
         return $point;
     }
 
-    public function attachAll(SplObjectStorage $points): void
+    public function attachAll(\SplObjectStorage $points): void
     {
         $this->points->addAll($points);
     }
 
-    public function detachAll(SplObjectStorage $points): void
+    public function detachAll(\SplObjectStorage $points): void
     {
         $this->points->removeAll($points);
     }
@@ -81,7 +76,7 @@ class Cluster extends Point implements IteratorAggregate
     public function updateCentroid(): void
     {
         $count = count($this->points);
-        if ($count === 0) {
+        if (0 === $count) {
             return;
         }
 
@@ -98,7 +93,7 @@ class Cluster extends Point implements IteratorAggregate
         }
     }
 
-    public function getIterator(): Traversable
+    public function getIterator(): \Traversable
     {
         return $this->points;
     }

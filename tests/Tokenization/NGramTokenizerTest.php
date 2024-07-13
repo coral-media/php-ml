@@ -8,7 +8,7 @@ use Phpml\Exception\InvalidArgumentException;
 use Phpml\Tokenization\NGramTokenizer;
 
 /**
- * Inspiration: https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-ngram-tokenizer.html
+ * Inspiration: https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-ngram-tokenizer.html.
  */
 class NGramTokenizerTest extends TokenizerTest
 {

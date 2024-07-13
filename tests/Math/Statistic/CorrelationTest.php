@@ -12,13 +12,13 @@ class CorrelationTest extends TestCase
 {
     public function testPearsonCorrelation(): void
     {
-        //http://www.stat.wmich.edu/s216/book/node126.html
+        // http://www.stat.wmich.edu/s216/book/node126.html
         $delta = 0.001;
         $x = [9300,  10565,  15000,  15000,  17764,  57000,  65940,  73676,  77006,  93739, 146088, 153260];
         $y = [7100, 15500, 4400, 4400, 5900, 4600, 8800, 2000, 2750, 2550,  960, 1025];
         self::assertEqualsWithDelta(-0.641, Correlation::pearson($x, $y), $delta);
 
-        //http://www.statisticshowto.com/how-to-compute-pearsons-correlation-coefficients/
+        // http://www.statisticshowto.com/how-to-compute-pearsons-correlation-coefficients/
         $delta = 0.001;
         $x = [43, 21, 25, 42, 57, 59];
         $y = [99, 65, 79, 75, 87, 82];

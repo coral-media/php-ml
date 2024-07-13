@@ -64,7 +64,7 @@ class Apriori implements Associator
      */
     public function getRules(): array
     {
-        if (count($this->large) === 0) {
+        if (0 === count($this->large)) {
             $this->large = $this->apriori();
         }
 
@@ -178,7 +178,7 @@ class Apriori implements Associator
         $antecedents = $this->powerSet($sample);
 
         return array_filter($antecedents, static function ($antecedent) use ($cardinality): bool {
-            return (count($antecedent) != $cardinality) && ($antecedent != []);
+            return (count($antecedent) != $cardinality) && ([] != $antecedent);
         });
     }
 
@@ -231,7 +231,7 @@ class Apriori implements Associator
 
         foreach ($samples as $p) {
             foreach ($samples as $q) {
-                if (count(array_merge(array_diff($p, $q), array_diff($q, $p))) != 2) {
+                if (2 != count(array_merge(array_diff($p, $q), array_diff($q, $p)))) {
                     continue;
                 }
 
@@ -316,7 +316,7 @@ class Apriori implements Associator
      */
     private function subset(array $set, array $subset): bool
     {
-        return count(array_diff($subset, array_intersect($subset, $set))) === 0;
+        return 0 === count(array_diff($subset, array_intersect($subset, $set)));
     }
 
     /**

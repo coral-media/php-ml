@@ -7,16 +7,14 @@ namespace Phpml\Tests\Classification\Linear;
 use Phpml\Classification\Linear\LogisticRegression;
 use Phpml\Exception\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use ReflectionMethod;
-use ReflectionProperty;
 
 class LogisticRegressionTest extends TestCase
 {
     public function testConstructorThrowWhenInvalidTrainingType(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Logistic regression can only be trained with '.
-            'batch (gradient descent), online (stochastic gradient descent) '.
+        $this->expectExceptionMessage('Logistic regression can only be trained with ' .
+            'batch (gradient descent), online (stochastic gradient descent) ' .
             'or conjugate batch (conjugate gradients) algorithms');
 
         new LogisticRegression(
@@ -31,7 +29,7 @@ class LogisticRegressionTest extends TestCase
     public function testConstructorThrowWhenInvalidCost(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("Logistic regression cost function can be one of the following: \n".
+        $this->expectExceptionMessage("Logistic regression cost function can be one of the following: \n" .
             "'log' for log-likelihood and 'sse' for sum of squared errors");
 
         new LogisticRegression(
@@ -163,10 +161,10 @@ class LogisticRegressionTest extends TestCase
         $classifier = new LogisticRegression();
         $classifier->train($samples, $targets);
 
-        $property = new ReflectionProperty($classifier, 'classifiers');
+        $property = new \ReflectionProperty($classifier, 'classifiers');
         $property->setAccessible(true);
         $predictor = $property->getValue($classifier)[0];
-        $method = new ReflectionMethod($predictor, 'predictProbability');
+        $method = new \ReflectionMethod($predictor, 'predictProbability');
         $method->setAccessible(true);
 
         $zero = $method->invoke($predictor, [0.1, 0.1], 0);
@@ -192,23 +190,23 @@ class LogisticRegressionTest extends TestCase
         $classifier = new LogisticRegression();
         $classifier->train($samples, $targets);
 
-        $property = new ReflectionProperty($classifier, 'classifiers');
+        $property = new \ReflectionProperty($classifier, 'classifiers');
         $property->setAccessible(true);
 
         $predictor = $property->getValue($classifier)[0];
-        $method = new ReflectionMethod($predictor, 'predictProbability');
+        $method = new \ReflectionMethod($predictor, 'predictProbability');
         $method->setAccessible(true);
         $zero = $method->invoke($predictor, [3.0, 9.5], 0);
         $not_zero = $method->invoke($predictor, [3.0, 9.5], 'not_0');
 
         $predictor = $property->getValue($classifier)[1];
-        $method = new ReflectionMethod($predictor, 'predictProbability');
+        $method = new \ReflectionMethod($predictor, 'predictProbability');
         $method->setAccessible(true);
         $one = $method->invoke($predictor, [3.0, 9.5], 1);
         $not_one = $method->invoke($predictor, [3.0, 9.5], 'not_1');
 
         $predictor = $property->getValue($classifier)[2];
-        $method = new ReflectionMethod($predictor, 'predictProbability');
+        $method = new \ReflectionMethod($predictor, 'predictProbability');
         $method->setAccessible(true);
         $two = $method->invoke($predictor, [3.0, 9.5], 2);
         $not_two = $method->invoke($predictor, [3.0, 9.5], 'not_2');

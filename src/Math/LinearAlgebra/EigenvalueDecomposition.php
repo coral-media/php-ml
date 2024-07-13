@@ -24,6 +24,7 @@ declare(strict_types=1);
  * @version 1.1
  *
  *  Slightly changed to adapt the original code to PHP-ML library
+ *
  *  @date 2017/04/11
  *
  *  @author Mustafa Karabulut
@@ -88,7 +89,7 @@ class EigenvalueDecomposition
     private $cdivi;
 
     /**
-     * Constructor: Check for symmetry, then construct the eigenvalue decomposition
+     * Constructor: Check for symmetry, then construct the eigenvalue decomposition.
      */
     public function __construct(array $arg)
     {
@@ -118,7 +119,7 @@ class EigenvalueDecomposition
     }
 
     /**
-     * Return the eigenvector matrix
+     * Return the eigenvector matrix.
      */
     public function getEigenvectors(): array
     {
@@ -146,7 +147,7 @@ class EigenvalueDecomposition
 
     /**
      * Return the real parts of the eigenvalues<br>
-     *  d = real(diag(D));
+     *  d = real(diag(D));.
      */
     public function getRealEigenvalues(): array
     {
@@ -155,7 +156,7 @@ class EigenvalueDecomposition
 
     /**
      * Return the imaginary parts of the eigenvalues <br>
-     *  d = imag(diag(D))
+     *  d = imag(diag(D)).
      */
     public function getImagEigenvalues(): array
     {
@@ -163,7 +164,7 @@ class EigenvalueDecomposition
     }
 
     /**
-     * Return the block diagonal eigenvalue matrix
+     * Return the block diagonal eigenvalue matrix.
      */
     public function getDiagonalEigenvalues(): array
     {
@@ -172,7 +173,7 @@ class EigenvalueDecomposition
         for ($i = 0; $i < $this->n; ++$i) {
             $D[$i] = array_fill(0, $this->n, 0.0);
             $D[$i][$i] = $this->d[$i];
-            if ($this->e[$i] == 0) {
+            if (0 == $this->e[$i]) {
                 continue;
             }
 
@@ -199,7 +200,7 @@ class EigenvalueDecomposition
             // Scale to avoid under/overflow.
             $h = $scale = 0.0;
             $scale += array_sum(array_map('abs', $this->d));
-            if ($scale == 0.0) {
+            if (0.0 == $scale) {
                 $this->e[$i] = $this->d[$i_];
                 $this->d = array_slice($this->V[$i_], 0, $this->n - 1);
                 for ($j = 0; $j < $i; ++$j) {
@@ -242,7 +243,7 @@ class EigenvalueDecomposition
 
                 $f = 0.0;
 
-                if ($h == 0.0) {
+                if (0.0 == $h) {
                     $h = 1e-32;
                 }
 
@@ -276,7 +277,7 @@ class EigenvalueDecomposition
             $this->V[$this->n - 1][$i] = $this->V[$i][$i];
             $this->V[$i][$i] = 1.0;
             $h = $this->d[$i + 1];
-            if ($h != 0.0) {
+            if (0.0 != $h) {
                 for ($k = 0; $k <= $i; ++$k) {
                     $this->d[$k] = $this->V[$k][$i + 1] / $h;
                 }
@@ -436,7 +437,7 @@ class EigenvalueDecomposition
                 $scale += abs($this->H[$i][$m - 1]);
             }
 
-            if ($scale != 0.0) {
+            if (0.0 != $scale) {
                 // Compute Householder transformation.
                 $h = 0.0;
                 for ($i = $high; $i >= $m; --$i) {
@@ -490,7 +491,7 @@ class EigenvalueDecomposition
         }
 
         for ($m = $high - 1; $m >= $low + 1; --$m) {
-            if ($this->H[$m][$m - 1] != 0.0) {
+            if (0.0 != $this->H[$m][$m - 1]) {
                 for ($i = $m + 1; $i <= $high; ++$i) {
                     $this->ort[$i] = $this->H[$i][$m - 1];
                 }
@@ -557,7 +558,7 @@ class EigenvalueDecomposition
         $norm = 0.0;
 
         for ($i = 0; $i < $nn; ++$i) {
-            if (($i > $high)) {
+            if ($i > $high) {
                 $this->d[$i] = $this->H[$i][$i];
                 $this->e[$i] = 0.0;
             }
@@ -574,7 +575,7 @@ class EigenvalueDecomposition
             $l = $n;
             while ($l > $low) {
                 $s = abs($this->H[$l - 1][$l - 1]) + abs($this->H[$l][$l]);
-                if ($s == 0.0) {
+                if (0.0 == $s) {
                     $s = $norm;
                 }
 
@@ -612,7 +613,7 @@ class EigenvalueDecomposition
 
                     $this->d[$n - 1] = $x + $z;
                     $this->d[$n] = $this->d[$n - 1];
-                    if ($z != 0.0) {
+                    if (0.0 != $z) {
                         $this->d[$n] = $x - $w / $z;
                     }
 
@@ -646,7 +647,7 @@ class EigenvalueDecomposition
                         $this->V[$i][$n] = $q * $this->V[$i][$n] - $p * $z;
                     }
 
-                    // Complex pair
+                // Complex pair
                 } else {
                     $this->d[$n - 1] = $x + $p;
                     $this->d[$n] = $x + $p;
@@ -668,7 +669,7 @@ class EigenvalueDecomposition
                 }
 
                 // Wilkinson's original ad hoc shift
-                if ($iter == 10) {
+                if (10 == $iter) {
                     $exshift += $x;
                     for ($i = $low; $i <= $n; ++$i) {
                         $this->H[$i][$i] -= $x;
@@ -680,7 +681,7 @@ class EigenvalueDecomposition
                 }
 
                 // MATLAB's new ad hoc shift
-                if ($iter == 30) {
+                if (30 == $iter) {
                     $s = ($y - $x) / 2.0;
                     $s *= $s + $w;
                     if ($s > 0) {
@@ -741,14 +742,14 @@ class EigenvalueDecomposition
                         $q = $this->H[$k + 1][$k - 1];
                         $r = ($notlast ? $this->H[$k + 2][$k - 1] : 0.0);
                         $x = abs($p) + abs($q) + abs($r);
-                        if ($x != 0.0) {
+                        if (0.0 != $x) {
                             $p /= $x;
                             $q /= $x;
                             $r /= $x;
                         }
                     }
 
-                    if ($x == 0.0) {
+                    if (0.0 == $x) {
                         break;
                     }
 
@@ -757,7 +758,7 @@ class EigenvalueDecomposition
                         $s = -$s;
                     }
 
-                    if ($s != 0) {
+                    if (0 != $s) {
                         if ($k != $m) {
                             $this->H[$k][$k - 1] = -$s * $x;
                         } elseif ($l != $m) {
@@ -811,7 +812,7 @@ class EigenvalueDecomposition
         }  // while ($n >= $low)
 
         // Backsubstitute to find vectors of upper triangular form
-        if ($norm == 0.0) {
+        if (0.0 == $norm) {
             return;
         }
 
@@ -819,7 +820,7 @@ class EigenvalueDecomposition
             $p = $this->d[$ni];
             $q = $this->e[$ni];
             // Real vector
-            if ($q == 0) {
+            if (0 == $q) {
                 $l = $ni;
                 $this->H[$ni][$ni] = 1.0;
                 for ($i = $ni - 1; $i >= 0; --$i) {
@@ -834,14 +835,14 @@ class EigenvalueDecomposition
                         $s = $r;
                     } else {
                         $l = $i;
-                        if ($this->e[$i] == 0.0) {
-                            if ($w != 0.0) {
+                        if (0.0 == $this->e[$i]) {
+                            if (0.0 != $w) {
                                 $this->H[$i][$ni] = -$r / $w;
                             } else {
                                 $this->H[$i][$ni] = -$r / ($eps * $norm);
                             }
 
-                            // Solve real equations
+                        // Solve real equations
                         } else {
                             $x = $this->H[$i][$i + 1];
                             $y = $this->H[$i + 1][$i];
@@ -865,7 +866,7 @@ class EigenvalueDecomposition
                     }
                 }
 
-                // Complex vector
+            // Complex vector
             } elseif ($q < 0) {
                 $l = $ni - 1;
                 // Last vector component imaginary so matrix is triangular
@@ -896,7 +897,7 @@ class EigenvalueDecomposition
                         $s = $sa;
                     } else {
                         $l = $i;
-                        if ($this->e[$i] == 0) {
+                        if (0 == $this->e[$i]) {
                             $this->cdiv(-$ra, -$sa, $w, $q);
                             $this->H[$i][$ni - 1] = $this->cdivr;
                             $this->H[$i][$ni] = $this->cdivi;
@@ -906,7 +907,7 @@ class EigenvalueDecomposition
                             $y = $this->H[$i + 1][$i];
                             $vr = ($this->d[$i] - $p) * ($this->d[$i] - $p) + $this->e[$i] * $this->e[$i] - $q * $q;
                             $vi = ($this->d[$i] - $p) * 2.0 * $q;
-                            if ($vr == 0.0 && $vi == 0.0) {
+                            if (0.0 == $vr && 0.0 == $vi) {
                                 $vr = $eps * $norm * (abs($w) + abs($q) + abs($x) + abs($y) + abs($z));
                             }
 

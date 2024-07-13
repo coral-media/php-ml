@@ -44,7 +44,7 @@ class Pipeline implements Estimator, Transformer
 
     public function train(array $samples, array $targets): void
     {
-        if ($this->estimator === null) {
+        if (null === $this->estimator) {
             throw new InvalidOperationException('Pipeline without estimator can\'t use train method');
         }
 
@@ -56,14 +56,11 @@ class Pipeline implements Estimator, Transformer
         $this->estimator->train($samples, $targets);
     }
 
-    /**
-     * @return mixed
-     */
     public function predict(array $samples)
     {
         $this->transform($samples);
 
-        if ($this->estimator === null) {
+        if (null === $this->estimator) {
             throw new InvalidOperationException('Pipeline without estimator can\'t use predict method');
         }
 

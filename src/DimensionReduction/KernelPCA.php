@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Phpml\DimensionReduction;
 
-use Closure;
 use Phpml\Exception\InvalidArgumentException;
 use Phpml\Exception\InvalidOperationException;
 use Phpml\Math\Distance\Euclidean;
@@ -22,21 +21,21 @@ class KernelPCA extends PCA
     public const KERNEL_LINEAR = 4;
 
     /**
-     * Selected kernel function
+     * Selected kernel function.
      *
      * @var int
      */
     protected $kernel;
 
     /**
-     * Gamma value used by the kernel
+     * Gamma value used by the kernel.
      *
      * @var float|null
      */
     protected $gamma;
 
     /**
-     * Original dataset used to fit KernelPCA
+     * Original dataset used to fit KernelPCA.
      *
      * @var array
      */
@@ -72,14 +71,14 @@ class KernelPCA extends PCA
      * Takes a data and returns a lower dimensional version
      * of this data while preserving $totalVariance or $numFeatures. <br>
      * $data is an n-by-m matrix and returned array is
-     * n-by-k matrix where k <= m
+     * n-by-k matrix where k <= m.
      */
     public function fit(array $data): array
     {
         $numRows = count($data);
         $this->data = $data;
 
-        if ($this->gamma === null) {
+        if (null === $this->gamma) {
             $this->gamma = 1.0 / $numRows;
         }
 
@@ -117,7 +116,7 @@ class KernelPCA extends PCA
 
     /**
      * Calculates similarity matrix by use of selected kernel function<br>
-     * An n-by-m matrix is given and an n-by-n matrix is returned
+     * An n-by-m matrix is given and an n-by-n matrix is returned.
      */
     protected function calculateKernelMatrix(array $data, int $numRows): array
     {
@@ -163,11 +162,11 @@ class KernelPCA extends PCA
     }
 
     /**
-     * Returns the callable kernel function
+     * Returns the callable kernel function.
      *
      * @throws \Exception
      */
-    protected function getKernel(): Closure
+    protected function getKernel(): \Closure
     {
         switch ($this->kernel) {
             case self::KERNEL_LINEAR:

@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Phpml\Tests\Tokenization;
 
-use Phpml\Exception\InvalidArgumentException;
-use Phpml\Tokenization\NGramWordTokenizer;
 use Phpml\Tokenization\RegExpTokenizer;
 
 /**
- * Inspiration: https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-ngram-tokenizer.html
+ * Inspiration: https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-ngram-tokenizer.html.
  */
 class RegExpTokenizerTest extends TokenizerTest
 {
@@ -41,9 +39,8 @@ class RegExpTokenizerTest extends TokenizerTest
                     '鬐鶤鶐', '飹勫嫢', '銪', '餀', '枲柊氠', '鍎鞚韕', '焲犈',
                     '殍涾烰', '齞齝囃', '蹅輶', '鄜', '孻憵', '擙樲橚',
                     '藒襓謥', '岯岪弨', '蒮', '廞徲', '孻憵懥', '趡趛踠', '槏',
-
-                ]
-            ]
+                ],
+            ],
         ];
     }
 }

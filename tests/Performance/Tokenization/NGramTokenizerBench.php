@@ -12,6 +12,7 @@ final class NGramTokenizerBench
 {
     /**
      * @Revs(1000)
+     *
      * @Iterations(5)
      */
     public function benchSimpleTokenizer(): void

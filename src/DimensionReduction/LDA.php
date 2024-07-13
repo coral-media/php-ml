@@ -51,23 +51,23 @@ class LDA extends EigenTransformerBase
      */
     public function __construct(?float $totalVariance = null, ?int $numFeatures = null)
     {
-        if ($totalVariance !== null && ($totalVariance < 0.1 || $totalVariance > 0.99)) {
+        if (null !== $totalVariance && ($totalVariance < 0.1 || $totalVariance > 0.99)) {
             throw new InvalidArgumentException('Total variance can be a value between 0.1 and 0.99');
         }
 
-        if ($numFeatures !== null && $numFeatures <= 0) {
+        if (null !== $numFeatures && $numFeatures <= 0) {
             throw new InvalidArgumentException('Number of features to be preserved should be greater than 0');
         }
 
-        if (($totalVariance !== null) === ($numFeatures !== null)) {
+        if ((null !== $totalVariance) === (null !== $numFeatures)) {
             throw new InvalidArgumentException('Either totalVariance or numFeatures should be specified in order to run the algorithm');
         }
 
-        if ($numFeatures !== null) {
+        if (null !== $numFeatures) {
             $this->numFeatures = $numFeatures;
         }
 
-        if ($totalVariance !== null) {
+        if (null !== $totalVariance) {
             $this->totalVariance = $totalVariance;
         }
     }
@@ -111,7 +111,7 @@ class LDA extends EigenTransformerBase
     }
 
     /**
-     * Returns unique labels in the dataset
+     * Returns unique labels in the dataset.
      */
     protected function getLabels(array $classes): array
     {
@@ -122,7 +122,7 @@ class LDA extends EigenTransformerBase
 
     /**
      * Calculates mean of each column for each class and returns
-     * n by m matrix where n is number of labels and m is number of columns
+     * n by m matrix where n is number of labels and m is number of columns.
      */
     protected function calculateMeans(array $data, array $classes): array
     {
@@ -169,7 +169,7 @@ class LDA extends EigenTransformerBase
     /**
      * Returns in-class scatter matrix for each class, which
      * is a n by m matrix where n is number of classes and
-     * m is number of columns
+     * m is number of columns.
      */
     protected function calculateClassVar(array $data, array $classes): Matrix
     {
@@ -192,7 +192,7 @@ class LDA extends EigenTransformerBase
     /**
      * Returns between-class scatter matrix for each class, which
      * is an n by m matrix where n is number of classes and
-     * m is number of columns
+     * m is number of columns.
      */
     protected function calculateClassCov(): Matrix
     {
@@ -210,7 +210,7 @@ class LDA extends EigenTransformerBase
     }
 
     /**
-     * Returns the result of the calculation (x - m)T.(x - m)
+     * Returns the result of the calculation (x - m)T.(x - m).
      */
     protected function calculateVar(array $row, array $means): Matrix
     {

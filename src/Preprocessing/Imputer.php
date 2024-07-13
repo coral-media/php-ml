@@ -13,9 +13,6 @@ class Imputer implements Preprocessor
 
     public const AXIS_ROW = 1;
 
-    /**
-     * @var mixed
-     */
     private $missingValue;
 
     /**
@@ -33,9 +30,6 @@ class Imputer implements Preprocessor
      */
     private $samples = [];
 
-    /**
-     * @param mixed $missingValue
-     */
     public function __construct($missingValue, Strategy $strategy, int $axis = self::AXIS_COLUMN, array $samples = [])
     {
         $this->missingValue = $missingValue;
@@ -51,7 +45,7 @@ class Imputer implements Preprocessor
 
     public function transform(array &$samples, ?array &$targets = null): void
     {
-        if ($this->samples === []) {
+        if ([] === $this->samples) {
             throw new InvalidOperationException('Missing training samples for Imputer.');
         }
 
@@ -71,7 +65,7 @@ class Imputer implements Preprocessor
 
     private function getAxis(int $column, array $currentSample): array
     {
-        if ($this->axis === self::AXIS_ROW) {
+        if (self::AXIS_ROW === $this->axis) {
             return array_diff($currentSample, [$this->missingValue]);
         }
 

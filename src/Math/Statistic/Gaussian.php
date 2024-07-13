@@ -23,7 +23,7 @@ class Gaussian
     }
 
     /**
-     * Returns probability density of the given <i>$value</i>
+     * Returns probability density of the given <i>$value</i>.
      *
      * @return float|int
      */
@@ -39,7 +39,7 @@ class Gaussian
 
     /**
      * Returns probability density value of the given <i>$value</i> based on
-     * given standard deviation and the mean
+     * given standard deviation and the mean.
      */
     public static function distributionPdf(float $mean, float $std, float $value): float
     {

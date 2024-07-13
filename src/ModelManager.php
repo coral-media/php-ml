@@ -21,7 +21,7 @@ class ModelManager
         }
 
         $result = file_put_contents($filepath, $serialized, LOCK_EX);
-        if ($result === false) {
+        if (false === $result) {
             throw new FileException(sprintf('File "%s" cannot be saved.', basename($filepath)));
         }
     }
@@ -33,7 +33,7 @@ class ModelManager
         }
 
         $object = unserialize((string) file_get_contents($filepath));
-        if ($object === false || !$object instanceof Estimator) {
+        if (false === $object || !$object instanceof Estimator) {
             throw new SerializeException(sprintf('"%s" cannot be unserialized.', basename($filepath)));
         }
 

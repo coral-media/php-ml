@@ -54,7 +54,7 @@ class Normalizer implements Preprocessor
             return;
         }
 
-        if ($this->norm === self::NORM_STD) {
+        if (self::NORM_STD === $this->norm) {
             $features = range(0, count($samples[0]) - 1);
             foreach ($features as $i) {
                 $values = array_column($samples, $i);
@@ -89,7 +89,7 @@ class Normalizer implements Preprocessor
             $norm1 += abs($feature);
         }
 
-        if ($norm1 == 0) {
+        if (0 == $norm1) {
             $count = count($sample);
             $sample = array_fill(0, $count, 1.0 / $count);
         } else {
@@ -108,7 +108,7 @@ class Normalizer implements Preprocessor
 
         $norm2 **= .5;
 
-        if ($norm2 == 0) {
+        if (0 == $norm2) {
             $sample = array_fill(0, count($sample), 1);
         } else {
             array_walk($sample, function (&$feature) use ($norm2): void {
@@ -120,7 +120,7 @@ class Normalizer implements Preprocessor
     private function normalizeSTD(array &$sample): void
     {
         foreach (array_keys($sample) as $i) {
-            if ($this->std[$i] != 0) {
+            if (0 != $this->std[$i]) {
                 $sample[$i] = ($sample[$i] - $this->mean[$i]) / $this->std[$i];
             } else {
                 // Same value for all samples.

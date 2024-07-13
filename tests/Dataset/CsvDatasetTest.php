@@ -18,7 +18,7 @@ class CsvDatasetTest extends TestCase
 
     public function testSampleCsvDatasetWithHeaderRow(): void
     {
-        $filePath = __DIR__.'/Resources/dataset.csv';
+        $filePath = __DIR__ . '/Resources/dataset.csv';
 
         $dataset = new CsvDataset($filePath, 2, true);
 
@@ -28,7 +28,7 @@ class CsvDatasetTest extends TestCase
 
     public function testSampleCsvDatasetWithoutHeaderRow(): void
     {
-        $filePath = __DIR__.'/Resources/dataset.csv';
+        $filePath = __DIR__ . '/Resources/dataset.csv';
 
         $dataset = new CsvDataset($filePath, 2, false);
 
@@ -38,7 +38,7 @@ class CsvDatasetTest extends TestCase
 
     public function testLongCsvDataset(): void
     {
-        $filePath = __DIR__.'/Resources/longdataset.csv';
+        $filePath = __DIR__ . '/Resources/longdataset.csv';
 
         $dataset = new CsvDataset($filePath, 1000, false);
 

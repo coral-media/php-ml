@@ -64,7 +64,7 @@ abstract class Split
 
     protected function seedGenerator(?int $seed = null): void
     {
-        if ($seed === null) {
+        if (null === $seed) {
             mt_srand();
         } else {
             mt_srand($seed);

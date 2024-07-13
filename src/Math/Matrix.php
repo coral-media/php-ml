@@ -105,7 +105,7 @@ class Matrix
      */
     public function getDeterminant()
     {
-        if ($this->determinant !== null) {
+        if (null !== $this->determinant) {
             return $this->determinant;
         }
 
@@ -125,7 +125,7 @@ class Matrix
 
     public function transpose(): self
     {
-        if ($this->rows === 1) {
+        if (1 === $this->rows) {
             $matrix = array_map(static function ($el): array {
                 return [$el];
             }, $this->matrix[0]);
@@ -197,7 +197,7 @@ class Matrix
     }
 
     /**
-     * Element-wise addition of the matrix with another one
+     * Element-wise addition of the matrix with another one.
      */
     public function add(self $other): self
     {
@@ -205,7 +205,7 @@ class Matrix
     }
 
     /**
-     * Element-wise subtracting of another matrix from this one
+     * Element-wise subtracting of another matrix from this one.
      */
     public function subtract(self $other): self
     {
@@ -248,7 +248,7 @@ class Matrix
 
     public function isSingular(): bool
     {
-        return $this->getDeterminant() == 0;
+        return 0 == $this->getDeterminant();
     }
 
     /**
@@ -275,7 +275,7 @@ class Matrix
     }
 
     /**
-     * Returns the transpose of given array
+     * Returns the transpose of given array.
      */
     public static function transposeArray(array $array): array
     {
@@ -284,7 +284,7 @@ class Matrix
 
     /**
      * Returns the dot product of two arrays<br>
-     * Matrix::dot(x, y) ==> x.y'
+     * Matrix::dot(x, y) ==> x.y'.
      */
     public static function dot(array $array1, array $array2): array
     {
@@ -295,7 +295,7 @@ class Matrix
     }
 
     /**
-     * Element-wise addition or substraction depending on the given sign parameter
+     * Element-wise addition or substraction depending on the given sign parameter.
      */
     private function sum(self $other, int $sign = 1): self
     {
@@ -313,7 +313,7 @@ class Matrix
     }
 
     /**
-     * Returns diagonal identity matrix of the same size of this matrix
+     * Returns diagonal identity matrix of the same size of this matrix.
      */
     private function getIdentity(): self
     {

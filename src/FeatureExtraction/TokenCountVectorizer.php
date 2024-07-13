@@ -77,7 +77,7 @@ class TokenCountVectorizer implements Transformer
 
         foreach ($tokens as $token) {
             $index = $this->getTokenIndex($token);
-            if ($index !== false) {
+            if (false !== $index) {
                 $this->updateFrequency($token);
                 if (!isset($counts[$index])) {
                     $counts[$index] = 0;
@@ -123,7 +123,7 @@ class TokenCountVectorizer implements Transformer
 
     private function isStopWord(string $token): bool
     {
-        return $this->stopWords !== null && $this->stopWords->isStopWord($token);
+        return null !== $this->stopWords && $this->stopWords->isStopWord($token);
     }
 
     private function updateFrequency(string $token): void

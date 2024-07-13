@@ -43,7 +43,7 @@ class Layer
 
     private function createNode(string $nodeClass, ?ActivationFunction $activationFunction = null): Node
     {
-        if ($nodeClass === Neuron::class) {
+        if (Neuron::class === $nodeClass) {
             return new Neuron($activationFunction);
         }
 

@@ -48,7 +48,7 @@ class SvmDataset extends ArrayDataset
         }
 
         $handle = fopen($filePath, 'rb');
-        if ($handle === false) {
+        if (false === $handle) {
             throw new FileException(sprintf('File "%s" can\'t be open.', basename($filePath)));
         }
 
@@ -97,7 +97,7 @@ class SvmDataset extends ArrayDataset
     private static function parseFeatureColumn(string $column): array
     {
         $feature = explode(':', $column, 2);
-        if (count($feature) !== 2) {
+        if (2 !== count($feature)) {
             throw new DatasetException(sprintf('Invalid value "%s".', $column));
         }
 

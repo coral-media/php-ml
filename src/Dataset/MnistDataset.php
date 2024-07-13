@@ -8,7 +8,7 @@ use Phpml\Exception\InvalidArgumentException;
 
 /**
  * MNIST dataset: http://yann.lecun.com/exdb/mnist/
- * original mnist dataset reader: https://github.com/AndrewCarterUK/mnist-neural-network-plain-php
+ * original mnist dataset reader: https://github.com/AndrewCarterUK/mnist-neural-network-plain-php.
  */
 final class MnistDataset extends ArrayDataset
 {
@@ -34,8 +34,8 @@ final class MnistDataset extends ArrayDataset
     {
         $stream = fopen($imagePath, 'rb');
 
-        if ($stream === false) {
-            throw new InvalidArgumentException('Could not open file: '.$imagePath);
+        if (false === $stream) {
+            throw new InvalidArgumentException('Could not open file: ' . $imagePath);
         }
 
         $images = [];
@@ -45,19 +45,19 @@ final class MnistDataset extends ArrayDataset
 
             $fields = unpack('Nmagic/Nsize/Nrows/Ncols', (string) $header);
 
-            if ($fields['magic'] !== self::MAGIC_IMAGE) {
-                throw new InvalidArgumentException('Invalid magic number: '.$imagePath);
+            if (self::MAGIC_IMAGE !== $fields['magic']) {
+                throw new InvalidArgumentException('Invalid magic number: ' . $imagePath);
             }
 
-            if ($fields['rows'] != self::IMAGE_ROWS) {
-                throw new InvalidArgumentException('Invalid number of image rows: '.$imagePath);
+            if (self::IMAGE_ROWS != $fields['rows']) {
+                throw new InvalidArgumentException('Invalid number of image rows: ' . $imagePath);
             }
 
-            if ($fields['cols'] != self::IMAGE_COLS) {
-                throw new InvalidArgumentException('Invalid number of image cols: '.$imagePath);
+            if (self::IMAGE_COLS != $fields['cols']) {
+                throw new InvalidArgumentException('Invalid number of image cols: ' . $imagePath);
             }
 
-            for ($i = 0; $i < $fields['size']; $i++) {
+            for ($i = 0; $i < $fields['size']; ++$i) {
                 $imageBytes = fread($stream, $fields['rows'] * $fields['cols']);
 
                 // Convert to float between 0 and 1
@@ -76,8 +76,8 @@ final class MnistDataset extends ArrayDataset
     {
         $stream = fopen($labelPath, 'rb');
 
-        if ($stream === false) {
-            throw new InvalidArgumentException('Could not open file: '.$labelPath);
+        if (false === $stream) {
+            throw new InvalidArgumentException('Could not open file: ' . $labelPath);
         }
 
         $labels = [];
@@ -87,8 +87,8 @@ final class MnistDataset extends ArrayDataset
 
             $fields = unpack('Nmagic/Nsize', (string) $header);
 
-            if ($fields['magic'] !== self::MAGIC_LABEL) {
-                throw new InvalidArgumentException('Invalid magic number: '.$labelPath);
+            if (self::MAGIC_LABEL !== $fields['magic']) {
+                throw new InvalidArgumentException('Invalid magic number: ' . $labelPath);
             }
 
             $labels = fread($stream, $fields['size']);
