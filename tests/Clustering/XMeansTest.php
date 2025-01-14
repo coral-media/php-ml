@@ -2,6 +2,7 @@
 
 namespace Phpml\Tests\Clustering;
 
+use Phpml\Clustering\KMeans;
 use Phpml\Clustering\XMeans;
 use Phpml\Exception\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
@@ -19,10 +20,12 @@ class XMeansTest extends TestCase
         $maxClusters = 5;
 
         $xMeans = new XMeans($minClusters, $maxClusters);
-        $clusters = $xMeans->cluster($samples);
 
-        self::assertGreaterThanOrEqual($minClusters, count($clusters));
-        self::assertLessThanOrEqual($maxClusters, count($clusters));
+        $clustersX = $xMeans->cluster($samples);
+        $clustersTotal = count($clustersX);
+
+        self::assertGreaterThanOrEqual($minClusters, $clustersTotal);
+        self::assertLessThanOrEqual($maxClusters, $clustersTotal);
     }
 
     /**
@@ -43,9 +46,11 @@ class XMeansTest extends TestCase
         $maxClusters = 5;
 
         $xMeans = new XMeans($minClusters, $maxClusters);
-        $clusters = $xMeans->cluster($samples);
 
-        self::assertGreaterThanOrEqual($minClusters, count($clusters));
-        self::assertLessThanOrEqual($maxClusters, count($clusters));
+        $clustersX = $xMeans->cluster($samples);
+        $clustersTotal = count($clustersX);
+
+        self::assertGreaterThanOrEqual($minClusters, $clustersTotal);
+        self::assertLessThanOrEqual($maxClusters, $clustersTotal);
     }
 }
