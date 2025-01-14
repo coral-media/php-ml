@@ -1,6 +1,6 @@
 services:
     php:
-        platform: linux/x86_64
+        platform: linux/amd64
         container_name: coral-media-php-ml
         build:
             context: .
