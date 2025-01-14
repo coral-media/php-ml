@@ -2,7 +2,7 @@ FROM php:8.2-fpm-alpine
 
 RUN apk update
 RUN apk add --no-cache git fcgi perl wget procps shadow libzip \
-    openssh freetype zip htop openjdk11
+    openssh freetype zip htop openjdk11-jre
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
